@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import { Zap, Calendar, Target } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from '../components/Header';
+import { ScrollableContainer } from '../components/ScrollableContainer';
 
 export const StreaksScreen: React.FC = () => {
   const { theme } = useTheme();
@@ -11,7 +12,7 @@ export const StreaksScreen: React.FC = () => {
   return (
     <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <Header title="Streaks" />
-      <ScrollView className="flex-1 px-6 py-4">
+      <ScrollableContainer>
         <View className="items-center py-12">
           <View className={`w-16 h-16 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-yellow-800' : 'bg-yellow-100'}`}>
             <Zap size={24} color={isDark ? '#fbbf24' : '#f59e0b'} />
@@ -39,7 +40,7 @@ export const StreaksScreen: React.FC = () => {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </ScrollableContainer>
     </View>
   );
 };

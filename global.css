@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* React Native ScrollView optimizations */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure proper flex behavior */
+.flex-1 {
+  flex: 1;
+}
+
+/* Remove any potential scroll interference */
+body, html {
+  overflow: visible;
+  height: auto;
+  touch-action: manipulation;
+}

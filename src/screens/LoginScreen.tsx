@@ -50,15 +50,21 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1"
+        style={{ flex: 1 }}
       >
         <ScrollView 
-          className="flex-1" 
-          contentContainerStyle={{ flexGrow: 1 }}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ 
+            paddingHorizontal: 24,
+            paddingVertical: 32,
+            flexGrow: 1
+          }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
+          bounces={true}
+          alwaysBounceVertical={false}
         >
-          <View className="px-6 py-8 min-h-full">
+          <View>
           {/* Header with theme switch */}
           <View className="flex-row justify-between items-center mb-12">
             <View>
@@ -70,13 +76,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             <ThemeSwitch />
           </View>
 
-          {/* Login Form */}
-          <View className="flex-1 justify-center">
+            {/* Login Form */}
+          <View className="justify-center" style={{ minHeight: 400 }}>
             <Text className={`text-2xl font-semibold mb-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Sign In
-            </Text>
-
-            {/* Credential Input */}
+            </Text>            {/* Credential Input */}
             <CustomInput
               icon={Mail}
               placeholder="Username, Email or Phone"

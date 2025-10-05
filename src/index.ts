@@ -9,6 +9,7 @@ export { SplashScreen } from './components/SplashScreen';
 export { CustomInput } from './components/CustomInput';
 export { CustomButton } from './components/CustomButton';
 export { Header } from './components/Header';
+export { ScrollableContainer } from './components/ScrollableContainer';
 
 // Screen exports
 export { LoginScreen } from './screens/LoginScreen';

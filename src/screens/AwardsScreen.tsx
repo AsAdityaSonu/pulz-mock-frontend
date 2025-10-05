@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import { Award, Trophy, Star, Medal } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from '../components/Header';
+import { ScrollableContainer } from '../components/ScrollableContainer';
 
 export const AwardsScreen: React.FC = () => {
   const { theme } = useTheme();
@@ -18,7 +19,7 @@ export const AwardsScreen: React.FC = () => {
   return (
     <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <Header title="Awards" />
-      <ScrollView className="flex-1 px-6 py-4">
+      <ScrollableContainer>
         <View className="py-4">
           <Text className={`text-xl font-semibold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
             Your Achievements
@@ -74,7 +75,7 @@ export const AwardsScreen: React.FC = () => {
             </Text>
           </View>
         </View>
-      </ScrollView>
+      </ScrollableContainer>
     </View>
   );
 };

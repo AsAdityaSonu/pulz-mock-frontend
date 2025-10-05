@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import { Heart, MessageCircle, Share } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from '../components/Header';
+import { ScrollableContainer } from '../components/ScrollableContainer';
 
 export const HomeScreen: React.FC = () => {
   const { theme } = useTheme();
@@ -11,7 +12,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <Header title="Home" showThemeSwitch />
-      <ScrollView className="flex-1 px-6 py-4">
+      <ScrollableContainer>
         <View className="items-center py-12">
           <View className={`w-16 h-16 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-purple-800' : 'bg-purple-100'}`}>
             <Heart size={24} color={isDark ? '#c084fc' : '#7c3aed'} />
@@ -34,7 +35,7 @@ export const HomeScreen: React.FC = () => {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </ScrollableContainer>
     </View>
   );
 };

@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import { Camera, Image, Type, Video } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from '../components/Header';
 import { CustomButton } from '../components/CustomButton';
+import { ScrollableContainer } from '../components/ScrollableContainer';
 
 export const CreateScreen: React.FC = () => {
   const { theme } = useTheme();
@@ -12,7 +13,7 @@ export const CreateScreen: React.FC = () => {
   return (
     <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <Header title="Create" />
-      <ScrollView className="flex-1 px-6 py-4">
+      <ScrollableContainer>
         <View className="py-12">
           <View className="items-center mb-8">
             <View className={`w-16 h-16 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-green-800' : 'bg-green-100'}`}>
@@ -57,7 +58,7 @@ export const CreateScreen: React.FC = () => {
             />
           </View>
         </View>
-      </ScrollView>
+      </ScrollableContainer>
     </View>
   );
 };
