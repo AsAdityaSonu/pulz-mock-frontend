@@ -8,6 +8,8 @@ import {
   Alert,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
+  Dimensions,
 } from 'react-native';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
 import { useAuth } from '../context/AuthContext';
@@ -15,6 +17,7 @@ import { useTheme } from '../context/ThemeContext';
 import { ThemeSwitch } from '../components/ThemeSwitch';
 import { CustomInput } from '../components/CustomInput';
 import { CustomButton } from '../components/CustomButton';
+import { LoginCard } from '../components/login/LoginCard';
 
 interface LoginScreenProps {
   navigation: any;
@@ -30,6 +33,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { theme } = useTheme();
 
   const isDark = theme === 'dark';
+  const { height } = Dimensions.get('window');
 
   const handleLogin = async () => {
     if (!credential || !password) {
@@ -47,80 +51,65 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-purple-50 to-indigo-100'}`}>
+      <StatusBar 
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={isDark ? '#1f2937' : '#f8faff'}
+      />
+      
+      {/* Background Gradient Overlay */}
+      <View className={`absolute inset-0 ${isDark ? 'bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900' : 'bg-gradient-to-br from-purple-50 via-white to-indigo-50'}`} />
+      
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
         <ScrollView 
           style={{ flex: 1 }}
-          contentContainerStyle={{ 
-            paddingHorizontal: 24,
-            paddingVertical: 32,
-            flexGrow: 1
-          }}
+          contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          bounces={true}
-          alwaysBounceVertical={false}
+          bounces={false}
         >
-          <View>
-          {/* Header with theme switch */}
-          <View className="flex-row justify-between items-center mb-12">
-            <View>
-              <Text className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                Welcome to
-              </Text>
-              <Text className="text-4xl font-bold text-purple-600 mt-1">Pulz</Text>
-            </View>
-            <ThemeSwitch />
-          </View>
-
-            {/* Login Form */}
-          <View className="justify-center" style={{ minHeight: 400 }}>
-            <Text className={`text-2xl font-semibold mb-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Sign In
-            </Text>            {/* Credential Input */}
-            <CustomInput
-              icon={Mail}
-              placeholder="Username, Email or Phone"
-              value={credential}
-              onChangeText={setCredential}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-
-            {/* Password Input */}
-            <CustomInput
-              icon={Lock}
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              rightIcon={showPassword ? EyeOff : Eye}
-              onRightIconPress={() => setShowPassword(!showPassword)}
-            />
-
-            {/* Login Button */}
-            <CustomButton
-              title={isLoading ? 'Signing In...' : 'Sign In'}
-              onPress={handleLogin}
-              loading={isLoading}
-              size="large"
-              style={{ marginBottom: 16 }}
-            />
-
-            {/* Sign Up Link */}
-            <View className="flex-row justify-center">
-              <Text className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                Don't have an account?{' '}
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                <Text className="text-purple-600 font-semibold">Sign Up</Text>
-              </TouchableOpacity>
+          {/* Header Section */}
+          <View className="px-6 pt-6 pb-4" style={{ minHeight: height * 0.25 }}>
+            <View className="flex-row justify-between items-start mb-6">
+              <View className="flex-1">
+                <View className="flex-row items-center mb-2">
+                  <Text className={`text-2xl font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Welcome to
+                  </Text>
+                </View>
+                <Text className={`text-5xl font-bold -mt-1 ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                  Pulz
+                </Text>
+                <Text className={`text-base mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'} max-w-xs leading-relaxed`}>
+                  Your gateway to amazing experiences and connections
+                </Text>
+              </View>
+              <View className="mt-2">
+                <ThemeSwitch />
+              </View>
             </View>
           </View>
+
+          {/* Login Card Container */}
+          <View className="flex-1 justify-center" style={{ minHeight: height * 0.65 }}>
+            <LoginCard
+              credential={credential}
+              setCredential={setCredential}
+              password={password}
+              setPassword={setPassword}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              isLoading={isLoading}
+              handleLogin={handleLogin}
+              navigation={navigation}
+            />
           </View>
+
+          {/* Bottom Padding */}
+          <View style={{ height: height * 0.1, minHeight: 40 }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

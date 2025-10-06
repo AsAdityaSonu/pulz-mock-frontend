@@ -27,18 +27,24 @@ export const Step4Privacy: React.FC<Step4PrivacyProps> = ({
   };
 
   return (
-    <View className="flex-1">
+    <View className="py-4">
       {/* Header */}
-      <View className="items-center mb-6">
-        <View className={`w-16 h-16 rounded-full items-center justify-center mb-3 ${
-          isDark ? 'bg-purple-800' : 'bg-purple-100'
-        }`}>
-          <Shield size={28} color={isDark ? '#a855f7' : '#8b5cf6'} />
+      <View className="items-center mb-12">
+        <View className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+          isDark ? 'bg-purple-900/30' : 'bg-purple-50'
+        }`} style={{
+          shadowColor: '#8b5cf6',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.15,
+          shadowRadius: 16,
+          elevation: 8,
+        }}>
+          <Shield size={32} color={isDark ? '#a855f7' : '#8b5cf6'} />
         </View>
-        <Text className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <Text className={`text-3xl font-bold mb-3 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Privacy Settings
         </Text>
-        <Text className={`text-center px-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+        <Text className={`text-center px-6 text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
           Choose who can see your content and profile
         </Text>
       </View>
@@ -147,11 +153,18 @@ export const Step4Privacy: React.FC<Step4PrivacyProps> = ({
       </View>
 
       {/* Navigation Buttons */}
-      <View className="space-y-3 mt-6">
+      <View className="space-y-4 mt-8">
         <CustomButton
-          title="Next"
+          title="Continue"
           onPress={onNext}
           size="large"
+          style={{
+            shadowColor: '#8b5cf6',
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            elevation: 8,
+          }}
         />
         
         <CustomButton

@@ -16,7 +16,7 @@ export const ThemeSwitch: React.FC = () => {
       }`}
     >
       {theme === 'dark' ? (
-        <Sun size={20} color="#a855f7" />
+        <Sun size={20} color="#dcbbfb" />
       ) : (
         <Moon size={20} color="#7c3aed" />
       )}

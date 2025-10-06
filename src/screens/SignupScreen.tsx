@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,17 +8,20 @@ import {
   Alert,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
-import { ThemeSwitch } from '../components/ThemeSwitch';
-import { 
-  Step1BasicInfo, 
-  Step2ContactInfo, 
-  Step3Security, 
-  Step4Privacy, 
-  Step5Interests
-} from '../components/signup';
+  StatusBar,
+  Dimensions,
+  Animated,
+} from "react-native";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { ThemeSwitch } from "../components/ThemeSwitch";
+import {
+  Step1BasicInfo,
+  Step2ContactInfo,
+  Step3Security,
+  Step4Privacy,
+  Step5Interests,
+} from "../components/signup";
 
 interface SignupScreenProps {
   navigation: any;
@@ -26,43 +29,93 @@ interface SignupScreenProps {
 
 export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [formData, setFormData] = useState({
-    user_name: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    phone_number: '',
-    date_of_birth: '',
-    password: '',
-    confirmPassword: '',
+    user_name: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    date_of_birth: "",
+    password: "",
+    confirmPassword: "",
     is_private: false,
-    interests: [] as string[]
+    interests: [] as string[],
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const progressAnim = useRef(new Animated.Value((1 / 5) * 100)).current;
 
   const { register } = useAuth();
   const { theme } = useTheme();
-  const isDark = theme === 'dark';
+  const isDark = theme === "dark";
+  const { height } = Dimensions.get("window");
 
-  const handleInputChange = (field: string, value: string | boolean | string[]) => {
-    setFormData(prev => ({
+  useEffect(() => {
+    // Animate progress bar width
+    Animated.timing(progressAnim, {
+      toValue: (currentStep / 5) * 100,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [currentStep]);
+
+  // direction: 'next' | 'back'
+  const animateStepChange = (
+    callback: () => void,
+    direction: "next" | "back"
+  ) => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: direction === "next" ? 100 : -100,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      callback();
+      slideAnim.setValue(direction === "next" ? -100 : 100);
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    });
+  };
+
+  const handleInputChange = (
+    field: string,
+    value: string | boolean | string[]
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   // Validation functions for each step
   const validateStep1 = () => {
     const { user_name, first_name, last_name } = formData;
-    
+
     if (!user_name.trim() || !first_name.trim() || !last_name.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return false;
     }
 
     if (user_name.length < 3) {
-      Alert.alert('Error', 'Username must be at least 3 characters');
+      Alert.alert("Error", "Username must be at least 3 characters");
       return false;
     }
 
@@ -71,15 +124,15 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   const validateStep2 = () => {
     const { email, phone_number } = formData;
-    
+
     if (!email.trim() || !phone_number.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Alert.alert('Error', 'Please enter a valid email address');
+      Alert.alert("Error", "Please enter a valid email address");
       return false;
     }
 
@@ -88,26 +141,26 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   const validateStep3 = () => {
     const { password, confirmPassword, date_of_birth } = formData;
-    
+
     if (!password || !confirmPassword || !date_of_birth.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return false;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+      Alert.alert("Error", "Passwords do not match");
       return false;
     }
 
     if (password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters');
+      Alert.alert("Error", "Password must be at least 6 characters");
       return false;
     }
 
     // Basic date validation (YYYY-MM-DD format)
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(date_of_birth)) {
-      Alert.alert('Error', 'Please enter date in YYYY-MM-DD format');
+      Alert.alert("Error", "Please enter date in YYYY-MM-DD format");
       return false;
     }
 
@@ -115,9 +168,9 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const birthDate = new Date(date_of_birth);
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
-    
+
     if (age < 13) {
-      Alert.alert('Error', 'You must be at least 13 years old to sign up');
+      Alert.alert("Error", "You must be at least 13 years old to sign up");
       return false;
     }
 
@@ -127,7 +180,6 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   // Step navigation handlers
   const handleNext = () => {
     let isValid = false;
-    
     switch (currentStep) {
       case 1:
         isValid = validateStep1();
@@ -144,26 +196,25 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       default:
         isValid = false;
     }
-
     if (isValid && currentStep < 5) {
-      setCurrentStep(currentStep + 1);
+      animateStepChange(() => setCurrentStep(currentStep + 1), "back");
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      animateStepChange(() => setCurrentStep(currentStep - 1), "next");
     }
   };
 
   const handleComplete = async () => {
     if (formData.interests.length !== 3) {
-      Alert.alert('Error', 'Please select exactly 3 games');
+      Alert.alert("Error", "Please select exactly 3 games");
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       const userData = {
         user_name: formData.user_name,
@@ -174,15 +225,15 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         date_of_birth: formData.date_of_birth,
         password: formData.password,
         is_private: formData.is_private,
-        interests: formData.interests
+        interests: formData.interests,
       };
 
       const success = await register(userData);
       if (!success) {
-        Alert.alert('Error', 'Failed to create account. Please try again.');
+        Alert.alert("Error", "Failed to create account. Please try again.");
       }
     } catch (error) {
-      Alert.alert('Error', 'Registration failed. Please try again.');
+      Alert.alert("Error", "Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -196,7 +247,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             formData={{
               user_name: formData.user_name,
               first_name: formData.first_name,
-              last_name: formData.last_name
+              last_name: formData.last_name,
             }}
             onInputChange={handleInputChange}
             onNext={handleNext}
@@ -208,7 +259,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           <Step2ContactInfo
             formData={{
               email: formData.email,
-              phone_number: formData.phone_number
+              phone_number: formData.phone_number,
             }}
             onInputChange={handleInputChange}
             onNext={handleNext}
@@ -222,7 +273,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             formData={{
               password: formData.password,
               confirmPassword: formData.confirmPassword,
-              date_of_birth: formData.date_of_birth
+              date_of_birth: formData.date_of_birth,
             }}
             onInputChange={handleInputChange}
             onNext={handleNext}
@@ -234,7 +285,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         return (
           <Step4Privacy
             formData={{
-              is_private: formData.is_private
+              is_private: formData.is_private,
             }}
             onInputChange={handleInputChange}
             onNext={handleNext}
@@ -245,7 +296,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         return (
           <Step5Interests
             formData={{
-              interests: formData.interests
+              interests: formData.interests,
             }}
             onInputChange={handleInputChange}
             onComplete={handleComplete}
@@ -262,59 +313,88 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+    <SafeAreaView
+      className={`flex-1 ${isDark ? "bg-gray-900" : "bg-gradient-to-br from-purple-50 to-indigo-100"}`}
+    >
+      <StatusBar
+        barStyle={isDark ? "light-content" : "dark-content"}
+        backgroundColor={isDark ? "#1f2937" : "#f8faff"}
+      />
+
+      {/* Background Gradient Overlay */}
+      <View
+        className={`absolute inset-0 ${isDark ? "bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900" : "bg-gradient-to-br from-purple-50 via-white to-indigo-50"}`}
+      />
+
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
       >
-        <ScrollView 
+        <ScrollView
           style={{ flex: 1 }}
-          contentContainerStyle={{ 
-            paddingHorizontal: 24, 
-            paddingVertical: 32,
-            flexGrow: 1
-          }}
+          contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          bounces={true}
-          scrollEnabled={true}
-          nestedScrollEnabled={true}
-          alwaysBounceVertical={false}
+          bounces={false}
         >
-          <View>
-            {/* Header with theme switch */}
-            <View className="flex-row justify-between items-center mb-8">
-              <View>
-                <Text className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          {/* Header Section */}
+          <View className="px-6 pt-8 pb-4" style={{ minHeight: height * 0.25 }}>
+            {/* Header Section */}
+            <View className="flex-row justify-between items-start mb-4">
+              <View className="flex-1">
+                <Text
+                  className={`text-xl font-medium ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                >
                   Join
                 </Text>
-                <Text className="text-4xl font-bold text-purple-600 mt-1">Pulz</Text>
-                <Text className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <Text
+                  className={`text-5xl font-bold -mt-2 ${isDark ? "text-white" : "text-gray-900"} mb-2`}
+                >
+                  Pulz
+                </Text>
+                <Text
+                  className={`text-sm mt-1 ${isDark ? "text-purple-400" : "text-purple-600"} font-semibold`}
+                >
                   Step {currentStep} of 5
                 </Text>
+                <View
+                  className={`h-0.5 w-12 mt-1 ${isDark ? "bg-purple-400" : "bg-purple-600"} rounded-full`}
+                />
               </View>
-              <ThemeSwitch />
+              <View className="mt-2">
+                <ThemeSwitch />
+              </View>
             </View>
+          </View>
 
-            {/* Progress Bar */}
-            <View className={`w-full h-2 rounded-full mb-8 ${isDark ? 'bg-gray-800' : 'bg-gray-200'}`}>
-              <View 
-                className="h-full bg-purple-600 rounded-full transition-all duration-300"
-                style={{ width: `${getProgressWidth()}%` }}
-              />
-            </View>
+          {/* Step Content Container */}
+          <View
+            className="flex-1 justify-center px-6 -mt-10"
+            style={{ minHeight: height * 0.6 }}
+          >
+            <Animated.View
+              style={{
+                opacity: fadeAnim,
+                transform: [{ translateX: slideAnim }],
+              }}
+            >
+              {renderCurrentStep()}
+            </Animated.View>
+          </View>
 
-            {/* Step Content */}
-            {renderCurrentStep()}
-
-            {/* Sign In Link */}
-            <View className="flex-row justify-center mt-8">
-              <Text className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                Already have an account?{' '}
+          {/* Sign In Link */}
+          <View className="px-6 pb-8" style={{ minHeight: height * 0.1 }}>
+            <View className="flex-row justify-center items-center pt-6">
+              <Text
+                className={`text-base ${isDark ? "text-gray-400" : "text-gray-600"}`}
+              >
+                Already have an account?{" "}
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text className="text-purple-600 font-semibold">Sign In</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text className="text-purple-600 font-bold text-base">
+                  Sign In
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

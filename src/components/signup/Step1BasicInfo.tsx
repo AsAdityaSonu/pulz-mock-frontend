@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { User } from 'lucide-react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { CustomInput } from '../CustomInput';
-import { CustomButton } from '../CustomButton';
+import React from "react";
+import { View, Text } from "react-native";
+import { User } from "lucide-react-native";
+import { useTheme } from "../../context/ThemeContext";
+import { CustomInput } from "../CustomInput";
+import { CustomButton } from "../CustomButton";
 
 interface Step1BasicInfoProps {
   formData: {
@@ -20,69 +20,90 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
   formData,
   onInputChange,
   onNext,
-  isValid
+  isValid,
 }) => {
   const { theme } = useTheme();
-  const isDark = theme === 'dark';
+  const isDark = theme === "dark";
 
   return (
-    <View>
+    <View className="py-4">
       {/* Header */}
-      <View className="items-center mb-6">
-        <View className={`w-16 h-16 rounded-full items-center justify-center mb-3 ${
-          isDark ? 'bg-purple-800' : 'bg-purple-100'
-        }`}>
-          <User size={28} color={isDark ? '#a855f7' : '#8b5cf6'} />
+      <View className="items-center mb-4">
+        <View
+          className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+            isDark ? "bg-purple-900/30" : "bg-purple-50"
+          }`}
+          style={{
+            shadowColor: "#8b5cf6",
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.15,
+            shadowRadius: 16,
+            elevation: 8,
+          }}
+        >
+          <User size={32} color={isDark ? "#a855f7" : "#8b5cf6"} />
         </View>
-        <Text className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <Text
+          className={`text-3xl font-bold mb-3 text-center ${isDark ? "text-white" : "text-gray-900"}`}
+        >
           Basic Information
-        </Text>
-        <Text className={`text-center px-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          Let's start with your name and username
         </Text>
       </View>
 
       {/* Form Fields */}
-      <View className="space-y-4">
-        <CustomInput
-          icon={User}
-          placeholder="First Name"
-          value={formData.first_name}
-          onChangeText={(value) => onInputChange('first_name', value)}
-          autoCapitalize="words"
-        />
+      <View className="mb-0">
+        <View style={{ marginBottom: 5 }}>
+          <CustomInput
+            icon={User}
+            placeholder="First Name"
+            value={formData.first_name}
+            onChangeText={(value) => onInputChange("first_name", value)}
+            autoCapitalize="words"
+          />
+        </View>
 
-        <CustomInput
-          icon={User}
-          placeholder="Last Name"
-          value={formData.last_name}
-          onChangeText={(value) => onInputChange('last_name', value)}
-          autoCapitalize="words"
-        />
+        <View style={{ marginBottom: 5 }}>
+          <CustomInput
+            icon={User}
+            placeholder="Last Name"
+            value={formData.last_name}
+            onChangeText={(value) => onInputChange("last_name", value)}
+            autoCapitalize="words"
+          />
+        </View>
 
         <CustomInput
           icon={User}
           placeholder="Username"
           value={formData.user_name}
-          onChangeText={(value) => onInputChange('user_name', value)}
+          onChangeText={(value) => onInputChange("user_name", value)}
           autoCapitalize="none"
         />
       </View>
 
       {/* Helper Text */}
-      <Text className={`text-sm mt-4 text-center ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-        You can always change this later
-      </Text>
+      {/* <Text
+        className={`text-sm mb-6 -mt-3 text-center ${isDark ? "text-gray-500" : "text-gray-500"}`}
+      >
+        You can always change this later in your profile
+      </Text> */}
 
       {/* Next Button */}
-      <View className="mt-12">
-        <CustomButton
-          title="Next"
-          onPress={onNext}
-          size="large"
-          disabled={!isValid}
-        />
-      </View>
+      <CustomButton
+        title="Continue"
+        onPress={onNext}
+        size="medium"
+        variant="outline"
+        disabled={!isValid}
+        style={{
+          marginTop: 16,
+          shadowColor: "#8b5cf6",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.3,
+          shadowRadius: 12,
+          elevation: 8,
+        }}
+      />
     </View>
   );
 };

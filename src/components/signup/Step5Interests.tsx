@@ -133,18 +133,24 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
   );
 
   const renderHeader = () => (
-    <View className="mb-6">
+    <View className="mb-8">
       {/* Header */}
-      <View className="items-center mb-6">
-        <View className={`w-20 h-20 rounded-full items-center justify-center mb-4 ${
-          isDark ? 'bg-blue-800' : 'bg-blue-100'
-        }`}>
+      <View className="items-center mb-10">
+        <View className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+          isDark ? 'bg-blue-900/30' : 'bg-blue-50'
+        }`} style={{
+          shadowColor: '#3b82f6',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.15,
+          shadowRadius: 16,
+          elevation: 8,
+        }}>
           <Gamepad2 size={32} color={isDark ? '#60a5fa' : '#3b82f6'} />
         </View>
-        <Text className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <Text className={`text-3xl font-bold mb-3 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Gaming Interests
         </Text>
-        <Text className={`text-center px-4 mb-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+        <Text className={`text-center px-6 mb-4 text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
           Pick your top 3 favorite games to connect with similar gamers
         </Text>
         
@@ -177,19 +183,26 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
         </Text>
       </View>
 
-      <Text className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      <Text className={`text-xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
         Available Games
       </Text>
     </View>
   );
 
   const renderFooter = () => (
-    <View className="space-y-3 mt-6">
+    <View className="space-y-4 mt-8">
       <CustomButton
         title="Complete Signup"
         onPress={onComplete}
         size="large"
         disabled={!isComplete()}
+        style={{
+          shadowColor: '#8b5cf6',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.3,
+          shadowRadius: 12,
+          elevation: 8,
+        }}
       />
       
       <CustomButton

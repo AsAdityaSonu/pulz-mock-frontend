@@ -31,15 +31,22 @@ export const CustomInput: React.FC<CustomInputProps> = ({
         </Text>
       )}
       <View
-        className={`flex-row items-center border rounded-xl px-4 py-3 ${
+        className={`flex-row items-center border rounded-2xl px-4 py-[14px] ${
           error 
             ? 'border-red-500' 
             : isFocused
               ? 'border-purple-500'
               : isDark 
-                ? 'border-gray-700 bg-gray-800' 
-                : 'border-gray-300 bg-gray-50'
+                ? 'border-gray-700/50 bg-gray-800/30' 
+                : 'border-gray-300/50 bg-white/70'
         }`}
+        style={{
+          shadowColor: isDark ? '#000' : '#8b5cf6',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: isDark ? 0.3 : 0.08,
+          shadowRadius: 12,
+          elevation: 4,
+        }}
       >
         <Icon 
           size={20} 
@@ -64,7 +71,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
             props.onBlur?.(e);
           }}
           placeholderTextColor={isDark ? '#9ca3af' : '#6b7280'}
-          className={`flex-1 ml-3 text-base ${isDark ? 'text-white' : 'text-gray-900'}`}
+          className={`flex-1 ml-3 text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}
         />
         {RightIcon && (
           <TouchableOpacity onPress={onRightIconPress}>

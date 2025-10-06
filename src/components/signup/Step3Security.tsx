@@ -30,24 +30,30 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <View>
+    <View className="py-4">
       {/* Header */}
-      <View className="items-center mb-6">
-        <View className={`w-16 h-16 rounded-full items-center justify-center mb-3 ${
-          isDark ? 'bg-green-800' : 'bg-green-100'
-        }`}>
-          <Lock size={28} color={isDark ? '#34d399' : '#10b981'} />
+      <View className="items-center mb-12">
+        <View className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+          isDark ? 'bg-green-900/30' : 'bg-green-50'
+        }`} style={{
+          shadowColor: '#10b981',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.15,
+          shadowRadius: 16,
+          elevation: 8,
+        }}>
+          <Lock size={32} color={isDark ? '#34d399' : '#10b981'} />
         </View>
-        <Text className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <Text className={`text-3xl font-bold mb-3 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Secure Your Account
         </Text>
-        <Text className={`text-center px-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+        <Text className={`text-center px-6 text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
           Create a strong password and confirm your age
         </Text>
       </View>
 
       {/* Form Fields */}
-      <View className="space-y-4">
+      <View className="space-y-5 mb-6">
         <CustomInput
           icon={Lock}
           placeholder="Password (min. 6 characters)"
@@ -77,8 +83,8 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
       </View>
 
       {/* Helper Text */}
-      <View className={`p-4 rounded-xl mt-4 ${isDark ? 'bg-gray-800' : 'bg-gray-50'}`}>
-        <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+      <View className={`p-5 rounded-2xl mb-10 ${isDark ? 'bg-gray-800/50' : 'bg-gray-50'}`}>
+        <Text className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           • Password must be at least 6 characters{'\n'}
           • You must be at least 13 years old to join{'\n'}
           • Your birthday won't be shown publicly
@@ -86,12 +92,19 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
       </View>
 
       {/* Navigation Buttons */}
-      <View className="mt-12 space-y-3">
+      <View className="space-y-4">
         <CustomButton
-          title="Next"
+          title="Continue"
           onPress={onNext}
           size="large"
           disabled={!isValid}
+          style={{
+            shadowColor: '#8b5cf6',
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            elevation: 8,
+          }}
         />
         
         <CustomButton
