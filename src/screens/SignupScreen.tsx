@@ -11,7 +11,7 @@ import {
   Dimensions,
   Animated,
 } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { ThemeSwitch } from "../components/ThemeSwitch";
@@ -340,22 +340,23 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           bounces={false}
         >
           {/* Header Section */}
-          <View className="px-6 pt-8 pb-4" style={{ minHeight: height * 0.25 }}>
-            {/* Header Section */}
-            <View className="flex-row justify-between items-start mb-4">
+          <View className="px-6 pt-6 pb-4">
+            <View className="flex-row justify-between items-start mb-6">
               <View className="flex-1">
+                <View className="flex-row items-center mb-2">
+                  <Text
+                    className={`text-4xl font-medium ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                  >
+                    Join
+                  </Text>
+                </View>
                 <Text
-                  className={`text-xl font-medium ${isDark ? "text-gray-300" : "text-gray-600"}`}
-                >
-                  Join
-                </Text>
-                <Text
-                  className={`text-5xl font-bold -mt-2 ${isDark ? "text-white" : "text-gray-900"} mb-2`}
+                  className={`text-6xl font-bold -mt-1 ${isDark ? "text-purple-600" : "text-purple-600"} mb-2`}
                 >
                   Pulz
                 </Text>
                 <Text
-                  className={`text-sm mt-1 ${isDark ? "text-purple-400" : "text-purple-600"} font-semibold`}
+                  className={`text-xl mt-1 ${isDark ? "text-purple-400" : "text-purple-600"} font-semibold`}
                 >
                   Step {currentStep} of 5
                 </Text>
