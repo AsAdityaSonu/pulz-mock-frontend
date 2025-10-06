@@ -251,7 +251,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             }}
             onInputChange={handleInputChange}
             onNext={handleNext}
-            isValid={validateStep1()}
+            isValid={true}
           />
         );
       case 2:
@@ -264,7 +264,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             onInputChange={handleInputChange}
             onNext={handleNext}
             onBack={handleBack}
-            isValid={validateStep2()}
+            isValid={true}
           />
         );
       case 3:
@@ -278,7 +278,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             onInputChange={handleInputChange}
             onNext={handleNext}
             onBack={handleBack}
-            isValid={validateStep3()}
+            isValid={true}
           />
         );
       case 4:

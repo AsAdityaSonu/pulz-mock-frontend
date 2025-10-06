@@ -31,6 +31,10 @@ export const LoginCard: React.FC<LoginCardProps> = ({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
+  const handleSignupNavigation = () => {
+    navigation.replace('Signup');
+  };
+
   return (
     <View className="px-5">
       <View 
@@ -57,7 +61,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
         </View>
 
         {/* Form Inputs */}
-        <View className="space-y-2 mb-3">
+        <View className="space-y-2 mb-1">
           <CustomInput
             icon={User}
             placeholder="Username, Email or Phone"
@@ -79,16 +83,20 @@ export const LoginCard: React.FC<LoginCardProps> = ({
         </View>
 
         {/* Forgot Password */}
-        <TouchableOpacity className="mb-3 self-end">
+        <TouchableOpacity className="mb-4 self-end">
           <Text className="text-purple-600 font-semibold text-base">
             Forgot Password?
           </Text>
         </TouchableOpacity>
 
-        {/* Login Button */}
+        {/* Login Button - only this triggers handleLogin */}
         <CustomButton
           title={isLoading ? 'Signing In...' : 'Sign In'}
-          onPress={handleLogin}
+          onPress={() => {
+            if (typeof handleLogin === 'function') {
+              handleLogin();
+            }
+          }}
           loading={isLoading}
           variant='outline'
           size="medium"

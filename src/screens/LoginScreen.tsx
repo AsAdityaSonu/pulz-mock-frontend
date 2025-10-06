@@ -33,7 +33,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { height } = Dimensions.get('window');
 
   const handleLogin = async () => {
+    console.log('=== HANDLELOGIN CALLED ===');
+    console.log('Stack trace:', new Error().stack);
+    console.log('Credential:', credential);
+    console.log('Password:', password);
+    console.log('========================');
+    
     if (!credential || !password) {
+      console.log('ALERT: Please fill in all fields');
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -67,11 +74,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           style={{ flex: 1 }}
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="always"
           bounces={false}
+          nestedScrollEnabled={true}
         >
           {/* Header Section */}
-          <View className="px-6 pt-6 pb-4" style={{ minHeight: height * 0.25 }}>
+          <View className="px-6 pt-6">
             <View className="flex-row justify-between items-start mb-6">
               <View className="flex-1">
                 <View className="flex-row items-center mb-2">
@@ -93,7 +101,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           </View>
 
           {/* Login Card Container */}
-          <View className="flex-1 justify-center" style={{ minHeight: height * 0.65 }}>
+          <View className="flex-1 justify-center" >
             <LoginCard
               credential={credential}
               setCredential={setCredential}
@@ -107,8 +115,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             />
           </View>
 
-          {/* Bottom Padding */}
-          <View style={{ height: height * 0.1, minHeight: 40 }} />
+          {/* Bottom spacing for keyboard */}
+          <View className="h-20" /> 
         </ScrollView>
       </KeyboardAvoidingView>
       </SafeAreaView>
