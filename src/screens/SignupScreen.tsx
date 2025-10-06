@@ -197,13 +197,13 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         isValid = false;
     }
     if (isValid && currentStep < 5) {
-      animateStepChange(() => setCurrentStep(currentStep + 1), "next");
+      animateStepChange(() => setCurrentStep(currentStep + 1), "back");
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
-      animateStepChange(() => setCurrentStep(currentStep - 1), "back");
+      animateStepChange(() => setCurrentStep(currentStep - 1), "next");
     }
   };
 

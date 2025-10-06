@@ -187,7 +187,7 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
       </Text>
 
       {/* Games by Category */}
-      <View className="mb-8">
+      <View className="mb-4">
         {Object.entries(groupGamesByCategory(games)).map(
           ([category, categoryGames]) =>
             renderGameSection(
@@ -201,7 +201,7 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
       </View>
 
       {/* Navigation Buttons */}
-      <View className="space-y-4">
+      <View className="-mb-4">
         <CustomButton
           title="Create Account"
           onPress={onComplete}
@@ -216,7 +216,7 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
           }}
         />
 
-        <View className="mt-5 flex-row justify-center">
+        <View className="mt-8 flex-row justify-center">
           <CircularButton icon={ArrowLeft} onPress={onBack} disabled={false} />
         </View>
       </View>

@@ -80,7 +80,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                     Welcome to
                   </Text>
                 </View>
-                <Text className={`text-5xl font-bold -mt-1 ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                <Text className={`text-5xl font-bold -mt-1 ${isDark ? 'text-purple-600' : 'text-purple-600'} mb-2`}>
                   Pulz
                 </Text>
                 <Text className={`text-base mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'} max-w-xs leading-relaxed`}>
