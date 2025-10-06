@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   Alert,
@@ -12,6 +11,7 @@ import {
   Dimensions,
   Animated,
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { ThemeSwitch } from "../components/ThemeSwitch";
@@ -318,7 +318,8 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     >
       <StatusBar
         barStyle={isDark ? "light-content" : "dark-content"}
-        backgroundColor={isDark ? "#1f2937" : "#f8faff"}
+        backgroundColor={isDark ? "#111827" : "#f8faff"}
+        translucent={false}
       />
 
       {/* Background Gradient Overlay */}

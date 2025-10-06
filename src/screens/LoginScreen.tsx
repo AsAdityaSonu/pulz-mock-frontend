@@ -51,7 +51,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`}>
       <StatusBar 
         barStyle={isDark ? 'light-content' : 'dark-content'}
-        backgroundColor={isDark ? '#1f2937' : '#f8faff'}
+        backgroundColor={isDark ? '#111827' : '#f8faff'}
         translucent={false}
       />
       <SafeAreaView className="flex-1">
@@ -75,14 +75,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             <View className="flex-row justify-between items-start mb-6">
               <View className="flex-1">
                 <View className="flex-row items-center mb-2">
-                  <Text className={`text-2xl font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <Text className={`text-4xl font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     Welcome to
                   </Text>
                 </View>
-                <Text className={`text-5xl font-bold -mt-1 ${isDark ? 'text-purple-600' : 'text-purple-600'} mb-2`}>
+                <Text className={`text-6xl font-bold -mt-1 ${isDark ? 'text-purple-600' : 'text-purple-600'} mb-2`}>
                   Pulz
                 </Text>
-                <Text className={`text-base mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'} max-w-xs leading-relaxed`}>
+                <Text className={`text-lg mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'} max-w-xs leading-relaxed`}>
                   Your gateway to amazing experiences and connections
                 </Text>
               </View>
