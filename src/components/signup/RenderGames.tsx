@@ -36,11 +36,11 @@ export const renderGame = (
   <TouchableOpacity
     key={game._id}
     onPress={() => handleGameSelect(game._id)}
-    className={`m-1 px-3 py-2 rounded-full ${
-      isSelected(game._id)
-        ? isDark ? 'bg-purple-800/40' : 'bg-purple-100/80'
-        : isDark ? 'bg-gray-800/60' : 'bg-gray-100/80'
-    }`}
+          className={`m-1 px-3 py-2 rounded-full ${
+        isSelected(game._id)
+          ? isDark ? 'bg-purple-800' : 'bg-purple-100'
+          : isDark ? 'bg-gray-800' : 'bg-gray-100'
+      }`}
     activeOpacity={0.7}
   >
     <View className="items-center justify-center relative">

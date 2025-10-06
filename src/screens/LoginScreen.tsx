@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   Alert,
@@ -11,12 +10,10 @@ import {
   StatusBar,
   Dimensions,
 } from 'react-native';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeSwitch } from '../components/ThemeSwitch';
-import { CustomInput } from '../components/CustomInput';
-import { CustomButton } from '../components/CustomButton';
 import { LoginCard } from '../components/login/LoginCard';
 
 interface LoginScreenProps {
@@ -51,14 +48,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-purple-50 to-indigo-100'}`}>
+    <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`}>
       <StatusBar 
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={isDark ? '#1f2937' : '#f8faff'}
+        translucent={false}
       />
+      <SafeAreaView className="flex-1">
       
-      {/* Background Gradient Overlay */}
-      <View className={`absolute inset-0 ${isDark ? 'bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900' : 'bg-gradient-to-br from-purple-50 via-white to-indigo-50'}`} />
+      {/* Background Overlay */}
+      <View className={`absolute inset-0 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`} />
       
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -112,6 +111,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           <View style={{ height: height * 0.1, minHeight: 40 }} />
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };

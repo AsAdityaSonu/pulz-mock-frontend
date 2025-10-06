@@ -93,10 +93,10 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
         disabled={!isComplete()}
         style={{
           shadowColor: "#8b5cf6",
-          shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: 0.3,
-          shadowRadius: 12,
-          elevation: 8,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 8,
+          elevation: 4,
         }}
       />
 
@@ -128,14 +128,14 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
       <View className="items-center mb-4">
         <View
           className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
-            isDark ? "bg-blue-900/30" : "bg-blue-50"
+            isDark ? "bg-blue-900" : "bg-blue-100"
           }`}
           style={{
             shadowColor: "#3b82f6",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.15,
-            shadowRadius: 16,
-            elevation: 8,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 4,
           }}
         >
           <Gamepad2 size={32} color={isDark ? "#60a5fa" : "#3b82f6"} />

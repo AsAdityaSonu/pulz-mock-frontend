@@ -314,7 +314,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView
-      className={`flex-1 ${isDark ? "bg-gray-900" : "bg-gradient-to-br from-purple-50 to-indigo-100"}`}
+      className={`flex-1 ${isDark ? "bg-gray-900" : "bg-purple-50"}`}
     >
       <StatusBar
         barStyle={isDark ? "light-content" : "dark-content"}
@@ -323,7 +323,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
       {/* Background Gradient Overlay */}
       <View
-        className={`absolute inset-0 ${isDark ? "bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900" : "bg-gradient-to-br from-purple-50 via-white to-indigo-50"}`}
+        className={`absolute inset-0 ${isDark ? "bg-gray-900" : "bg-purple-50"}`}
       />
 
       <KeyboardAvoidingView

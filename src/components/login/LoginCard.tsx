@@ -35,15 +35,15 @@ export const LoginCard: React.FC<LoginCardProps> = ({
     <View className="px-5">
       <View 
         className={`
-          ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-white'} 
-          border backdrop-blur-xl rounded-3xl px-5 py-6 shadow-2xl
+          ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} 
+          border rounded-3xl px-5 py-6
         `}
         style={{
           shadowColor: isDark ? '#000' : '#8b5cf6',
-          shadowOffset: { width: 0, height: 20 },
-          shadowOpacity: isDark ? 0.3 : 0.15,
-          shadowRadius: 25,
-          elevation: 20,
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: isDark ? 0.3 : 0.1,
+          shadowRadius: 12,
+          elevation: 8,
         }}
       >
         {/* Sign In Header */}
@@ -97,7 +97,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             shadowColor: '#8b5cf6',
             shadowOffset: { width: 0, height: 8 },
             shadowOpacity: 0.3,
-            shadowRadius: 12,
+            shadowRadius: 8,
             elevation: 8,
           }}
         />

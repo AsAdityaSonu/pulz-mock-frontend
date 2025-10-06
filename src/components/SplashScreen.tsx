@@ -42,7 +42,7 @@ export const SplashScreen: React.FC = () => {
   }, []);
 
   return (
-    <View className="flex-1 bg-gradient-to-br from-purple-600 to-purple-800 justify-center items-center">
+    <View className="flex-1 bg-purple-700 justify-center items-center">
       <Animated.View
         style={{
           opacity: fadeAnim,

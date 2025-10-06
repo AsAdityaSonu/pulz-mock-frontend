@@ -31,14 +31,14 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
       <View className="items-center mb-4">
         <View
           className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
-            isDark ? "bg-purple-900/30" : "bg-purple-50"
+            isDark ? "bg-purple-900" : "bg-purple-100"
           }`}
           style={{
             shadowColor: "#8b5cf6",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.15,
-            shadowRadius: 16,
-            elevation: 8,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 4,
           }}
         >
           <User size={32} color={isDark ? "#a855f7" : "#8b5cf6"} />
@@ -100,7 +100,7 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
           shadowColor: "#8b5cf6",
           shadowOffset: { width: 0, height: 8 },
           shadowOpacity: 0.3,
-          shadowRadius: 12,
+          shadowRadius: 8,
           elevation: 8,
         }}
       />

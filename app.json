@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "Pulz",
+    "slug": "pulz-dev",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -30,7 +30,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "73f4f99c-bf29-4837-91ae-1a672bffff43"
+        "projectId": "1e4a0ac4-1f05-4fa2-9e7d-7b5c0ffaf6af"
       }
     }
   }

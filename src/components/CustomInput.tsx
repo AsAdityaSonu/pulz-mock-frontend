@@ -38,13 +38,13 @@ export const CustomInput: React.FC<CustomInputProps> = ({
               ? 'border-purple-500'
               : isDark 
                 ? 'border-gray-700/50 bg-gray-800/30' 
-                : 'border-gray-300/50 bg-white/70'
+                : 'border-gray-300/50 bg-transparent'
         }`}
         style={{
           shadowColor: isDark ? '#000' : '#8b5cf6',
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: isDark ? 0.3 : 0.08,
-          shadowRadius: 12,
+          shadowRadius: 8,
           elevation: 4,
         }}
       >
