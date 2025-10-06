@@ -19,3 +19,13 @@ body, html {
   touch-action: manipulation;
   background-color: #000000; 
 }
+
+/* Hide scroll bars while keeping scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
