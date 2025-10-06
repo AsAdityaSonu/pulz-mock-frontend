@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { Gamepad2, Star, Zap, Trophy } from 'lucide-react-native';
+import { Gamepad2, Star, Zap, Trophy, ArrowLeftIcon } from 'lucide-react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { CustomButton } from '../CustomButton';
+import { CircularButton } from '../CustomCircularButton';
 
 interface Game {
   _id: string;
@@ -87,7 +88,7 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
   const renderGame = ({ item: game }: { item: Game }) => (
     <TouchableOpacity
       onPress={() => handleGameSelect(game._id)}
-      className={`w-full mb-3 p-4 rounded-2xl border-2 ${
+      className={`w-full mb-2 p-3 rounded-xl border ${
         isSelected(game._id)
           ? isDark ? 'bg-purple-900/30 border-purple-500' : 'bg-purple-50 border-purple-400'
           : isDark ? 'bg-gray-800 border-gray-600' : 'bg-gray-50 border-gray-300'
@@ -96,35 +97,31 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
     >
       <View className="flex-row items-center">
         {/* Game Icon */}
-        <View className={`w-12 h-12 rounded-xl items-center justify-center mr-4 ${
+        <View className={`w-8 h-8 rounded-lg items-center justify-center mr-3 ${
           isDark ? 'bg-gray-700' : 'bg-white'
         }`}>
-          <Gamepad2 size={24} color={isDark ? '#9ca3af' : '#6b7280'} />
+          <Gamepad2 size={16} color={isDark ? '#9ca3af' : '#6b7280'} />
         </View>
 
         {/* Game Info */}
         <View className="flex-1">
-          <Text className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          <Text className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>
             {game.name}
           </Text>
           
-          <View className="flex-row items-center mb-1">
-            <Trophy size={12} color={isDark ? '#9ca3af' : '#6b7280'} />
+          <View className="flex-row items-center">
+            <Trophy size={10} color={isDark ? '#9ca3af' : '#6b7280'} />
             <Text className={`ml-1 text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               {game.category}
             </Text>
           </View>
-
-          <Text className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`} numberOfLines={2}>
-            {game.description}
-          </Text>
         </View>
 
         {/* Selection Indicator */}
         {isSelected(game._id) && (
           <View className="ml-2">
-            <View className="w-6 h-6 bg-purple-500 rounded-full items-center justify-center">
-              <Star size={14} color="#ffffff" fill="#ffffff" />
+            <View className="w-5 h-5 bg-purple-500 rounded-full items-center justify-center">
+              <Star size={12} color="#ffffff" fill="#ffffff" />
             </View>
           </View>
         )}
@@ -226,29 +223,85 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
   }
 
   return (
-    <View className="flex-1">
-      <FlatList
-        data={games}
-        renderItem={renderGame}
-        keyExtractor={(item) => item._id}
-        ListHeaderComponent={renderHeader}
-        ListFooterComponent={renderFooter}
-        showsVerticalScrollIndicator={false}
-        bounces={true}
-        alwaysBounceVertical={false}
-        contentContainerStyle={{
-          paddingBottom: 40,
-          flexGrow: 1,
-        }}
-        ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
-        removeClippedSubviews={false}
-        initialNumToRender={8}
-        maxToRenderPerBatch={4}
-        windowSize={8}
-        keyboardShouldPersistTaps="handled"
-        scrollEnabled={true}
-        nestedScrollEnabled={false}
-      />
+    <View className="py-4">
+      {/* Header */}
+      <View className="items-center mb-12">
+        <View
+          className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+            isDark ? "bg-blue-900/30" : "bg-blue-50"
+          }`}
+          style={{
+            shadowColor: "#3b82f6",
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.15,
+            shadowRadius: 16,
+            elevation: 8,
+          }}
+        >
+          <Gamepad2 size={32} color={isDark ? "#60a5fa" : "#3b82f6"} />
+        </View>
+        <Text
+          className={`text-3xl font-bold mb-3 text-center ${isDark ? "text-white" : "text-gray-900"}`}
+        >
+          Gaming Interests
+        </Text>
+        <Text
+          className={`text-center px-6 text-lg ${isDark ? "text-gray-400" : "text-gray-600"} leading-relaxed`}
+        >
+          Pick your top 3 favorite games to connect with similar gamers
+        </Text>
+        {/* Progress */}
+        <View className={`px-4 py-2 rounded-full ${
+          isComplete() 
+            ? isDark ? 'bg-green-800' : 'bg-green-100'
+            : isDark ? 'bg-yellow-800' : 'bg-yellow-100'
+        }`}>
+          <Text className={`font-semibold ${
+            isComplete()
+              ? isDark ? 'text-green-400' : 'text-green-700'
+              : isDark ? 'text-yellow-400' : 'text-yellow-700'
+          }`}>
+            Selected: {getSelectionProgress()}
+          </Text>
+        </View>
+      </View>
+
+      {/* Helper Text */}
+      <Text
+        className={`text-sm mb-10 text-center ${isDark ? "text-gray-500" : "text-gray-500"}`}
+      >
+        We'll use your gaming preferences to suggest friends, communities, and content you'll love.
+      </Text>
+
+      {/* Game List */}
+      <View className="mb-8">
+        {games.map((game) => renderGame({ item: game }))}
+      </View>
+
+      {/* Navigation Buttons */}
+      <View className="space-y-4">
+        <CustomButton
+          title="Create Account"
+          onPress={onComplete}
+          size="large"
+          disabled={!isComplete()}
+          style={{
+            shadowColor: '#8b5cf6',
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            elevation: 8,
+          }}
+        />
+        
+        <View className="flex-row justify-center">
+          <CircularButton
+            icon={ArrowLeftIcon}
+            onPress={onBack}
+            disabled={false}
+          />
+        </View>
+      </View>
     </View>
   );
 };

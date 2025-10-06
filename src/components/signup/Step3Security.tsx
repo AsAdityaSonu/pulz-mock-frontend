@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Lock, Calendar, Eye, EyeOff } from 'lucide-react-native';
+import { Lock, Calendar, Eye, EyeOff, ArrowLeft, ArrowRight } from 'lucide-react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { CustomInput } from '../CustomInput';
 import { CustomButton } from '../CustomButton';
+import { CircularButton } from '../CustomCircularButton';
 
 interface Step3SecurityProps {
   formData: {
@@ -53,7 +54,7 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
       </View>
 
       {/* Form Fields */}
-      <View className="space-y-5 mb-6">
+      <View className="mb-8">
         <CustomInput
           icon={Lock}
           placeholder="Password (min. 6 characters)"
@@ -83,35 +84,24 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
       </View>
 
       {/* Helper Text */}
-      <View className={`p-5 rounded-2xl mb-10 ${isDark ? 'bg-gray-800/50' : 'bg-gray-50'}`}>
-        <Text className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          • Password must be at least 6 characters{'\n'}
-          • You must be at least 13 years old to join{'\n'}
-          • Your birthday won't be shown publicly
-        </Text>
-      </View>
+      <Text
+        className={`text-sm mb-10 text-center ${isDark ? 'text-gray-500' : 'text-gray-500'}`}
+      >
+        Password must be at least 6 characters. You must be at least 13 years old to join. Your birthday won't be shown publicly.
+      </Text>
 
       {/* Navigation Buttons */}
-      <View className="space-y-4">
-        <CustomButton
-          title="Continue"
-          onPress={onNext}
-          size="large"
-          disabled={!isValid}
-          style={{
-            shadowColor: '#8b5cf6',
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.3,
-            shadowRadius: 12,
-            elevation: 8,
-          }}
-        />
-        
-        <CustomButton
-          title="Back"
-          variant="outline"
+      <View className="flex-row justify-between">
+        <CircularButton
+          icon={ArrowLeft}
           onPress={onBack}
-          size="large"
+          disabled={false}
+          style={{ marginRight: 12 }}
+        />
+        <CircularButton
+          icon={ArrowRight}
+          onPress={onNext}
+          disabled={!isValid}
         />
       </View>
     </View>
