@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { User } from "lucide-react-native";
+import { User, UserCircle, AtSign } from "lucide-react-native";
 import { useTheme } from "../../context/ThemeContext";
 import { CustomInput } from "../CustomInput";
 import { CustomButton } from "../CustomButton";
@@ -54,7 +54,7 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
       <View className="mb-0">
         <View style={{ marginBottom: 5 }}>
           <CustomInput
-            icon={User}
+            icon={UserCircle}
             placeholder="First Name"
             value={formData.first_name}
             onChangeText={(value) => onInputChange("first_name", value)}
@@ -64,7 +64,7 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
 
         <View style={{ marginBottom: 5 }}>
           <CustomInput
-            icon={User}
+            icon={UserCircle}
             placeholder="Last Name"
             value={formData.last_name}
             onChangeText={(value) => onInputChange("last_name", value)}
@@ -73,7 +73,7 @@ export const Step1BasicInfo: React.FC<Step1BasicInfoProps> = ({
         </View>
 
         <CustomInput
-          icon={User}
+          icon={AtSign}
           placeholder="Username"
           value={formData.user_name}
           onChangeText={(value) => onInputChange("user_name", value)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
+import { User, Lock, Eye, EyeOff } from 'lucide-react-native';
 import { CustomInput } from '../CustomInput';
 import { CustomButton } from '../CustomButton';
 import { useTheme } from '../../context/ThemeContext';
@@ -32,11 +32,11 @@ export const LoginCard: React.FC<LoginCardProps> = ({
   const isDark = theme === 'dark';
 
   return (
-    <View className="px-6">
+    <View className="px-5">
       <View 
         className={`
           ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-white'} 
-          border backdrop-blur-xl rounded-3xl px-6 py-8 shadow-2xl
+          border backdrop-blur-xl rounded-3xl px-5 py-6 shadow-2xl
         `}
         style={{
           shadowColor: isDark ? '#000' : '#8b5cf6',
@@ -59,7 +59,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
         {/* Form Inputs */}
         <View className="space-y-2 mb-3">
           <CustomInput
-            icon={Mail}
+            icon={User}
             placeholder="Username, Email or Phone"
             value={credential}
             onChangeText={setCredential}
