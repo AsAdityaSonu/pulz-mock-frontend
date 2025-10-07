@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Zap, Calendar, Target } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from '../components/Header';
@@ -10,7 +11,12 @@ export const StreaksScreen: React.FC = () => {
   const isDark = theme === 'dark';
 
   return (
-    <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      <StatusBar 
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={isDark ? '#111827' : '#ffffff'}
+        translucent={false}
+      />
       <Header title="Streaks" />
       <ScrollableContainer>
         <View className="items-center py-12">
@@ -41,6 +47,6 @@ export const StreaksScreen: React.FC = () => {
           </View>
         </View>
       </ScrollableContainer>
-    </View>
+    </SafeAreaView>
   );
 };
