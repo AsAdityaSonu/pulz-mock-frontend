@@ -32,6 +32,10 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
       alwaysBounceVertical={false}
       keyboardShouldPersistTaps="handled"
       nestedScrollEnabled={true}
+      // Performance optimizations for smoother scrolling
+      removeClippedSubviews={true}
+      scrollEventThrottle={16}
+      decelerationRate="normal"
       {...scrollViewProps}
     >
       {children}

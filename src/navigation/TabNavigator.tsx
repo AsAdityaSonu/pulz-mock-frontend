@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Zap, Plus, Award, User } from 'lucide-react-native';
+import { Platform } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { HomeScreen } from '../screens/HomeScreen';
 import { StreaksScreen } from '../screens/StreaksScreen';
@@ -18,19 +19,38 @@ export const TabNavigator: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        // Performance optimization - preload all screens for instant switching
+        lazy: false,
+        tabBarHideOnKeyboard: Platform.OS === 'ios',
         tabBarStyle: {
           backgroundColor: isDark ? '#111827' : '#ffffff',
           borderTopColor: isDark ? '#374151' : '#e5e7eb',
           borderTopWidth: 1,
           height: 85,
           paddingBottom: 10,
-          paddingTop: 10,
+          paddingTop: 5,
         },
         tabBarActiveTintColor: '#7c3aed',
         tabBarInactiveTintColor: isDark ? '#9ca3af' : '#6b7280',
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
+          marginTop: 0,  // Removed margin to eliminate space above labels
+        },
+        tabBarIconStyle: {
+          marginBottom: 0,  // Adjusted to center icons better
+        },
+        tabBarAllowFontScaling: false,
+      }}
+      screenListeners={{
+        focus: () => {
+          // Smooth focus transitions
+          if (Platform.OS === 'ios') {
+            // Optional: Add haptic feedback for iOS
+            // You can uncomment this if you install expo-haptics
+            // import * as Haptics from 'expo-haptics';
+            // Haptics.selectionAsync();
+          }
         },
       }}
     >
