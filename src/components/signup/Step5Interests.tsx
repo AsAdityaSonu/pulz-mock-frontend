@@ -4,6 +4,7 @@ import { Gamepad2, Star, Zap, Trophy, ArrowLeft } from "lucide-react-native";
 import { useTheme } from "../../context/ThemeContext";
 import { CustomButton } from "../CustomButton";
 import { CircularButton } from "../CustomCircularButton";
+import { apiService } from "../../services/api";
 import {
   groupGamesByCategory,
   renderGameSection,
@@ -38,8 +39,7 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
 
   const fetchGames = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/games");
-      const data = await response.json();
+      const data = await apiService.getGames();
 
       if (data.success) {
         setGames(data.games || []);
@@ -48,7 +48,8 @@ export const Step5Interests: React.FC<Step5InterestsProps> = ({
       }
     } catch (error) {
       console.error("Failed to fetch games:", error);
-      Alert.alert("Error", "Failed to load games. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      Alert.alert("Error", `Failed to load games: ${errorMessage}. Please try again.`);
       setGames([]);
     } finally {
       setLoading(false);
