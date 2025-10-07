@@ -35,7 +35,7 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
           : 'bg-gray-600 border-gray-600';
       case 'outline':
         return isDark
-          ? 'bg-gray-900 border-purple-400 border-2'
+          ? 'bg-gray-800 border-purple-400 border-2'
           : 'bg-white border-purple-600 border-2';
       default:
         return isDark
