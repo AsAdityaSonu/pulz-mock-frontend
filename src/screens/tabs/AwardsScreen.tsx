@@ -54,7 +54,7 @@ const AwardsScreenComponent: React.FC = () => {
       <Header title="Awards" />
       <ScrollableContainer>
         {/* Achievement Progress */}
-        <View className="pt-4">
+        <View className="py-4">
           <View className="items-center mb-8">
             <View
               className={`w-20 h-20 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-yellow-800' : 'bg-yellow-100'}`}

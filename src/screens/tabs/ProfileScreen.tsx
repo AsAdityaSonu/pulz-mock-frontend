@@ -29,7 +29,7 @@ export const ProfileScreen: React.FC = () => {
       <Header title="Profile" />
       <ScrollableContainer>
         {/* User Info */}
-        <View className="items-center mb-8">
+        <View className="items-center py-4">
           <View
             className={`w-24 h-24 rounded-full items-center justify-center mb-4 ${
               isDark ? 'bg-purple-800' : 'bg-purple-100'

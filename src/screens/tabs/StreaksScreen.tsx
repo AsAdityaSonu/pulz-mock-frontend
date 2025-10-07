@@ -23,7 +23,7 @@ export const StreaksScreen: React.FC = () => {
       <Header title="Streaks" />
       <ScrollableContainer>
         {/* Current Streak Display */}
-        <View className="items-center py-8">
+        <View className="items-center py-4">
           <View
             className={`w-20 h-20 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-yellow-800' : 'bg-yellow-100'}`}
           >

@@ -23,7 +23,7 @@ export const CreateScreen: React.FC = () => {
       />
       <Header title="Create" />
       <ScrollableContainer>
-        <View className="py-8">
+        <View className="py-4">
           <View className="items-center mb-8">
             <View
               className={`w-16 h-16 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-green-800' : 'bg-green-100'}`}

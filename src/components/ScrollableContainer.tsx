@@ -19,8 +19,8 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
 
   const defaultContentContainerStyle: ViewStyle = {
     flexGrow: 1,
-    paddingHorizontal: padded ? 24 : 0,
-    paddingVertical: padded ? 16 : 0,
+    paddingHorizontal: padded ? 16 : 0,
+    paddingVertical: padded ? 10 : 0,
   };
 
   return (

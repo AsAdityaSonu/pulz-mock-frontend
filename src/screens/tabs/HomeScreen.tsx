@@ -22,7 +22,7 @@ export const HomeScreen: React.FC = () => {
       />
       <Header title="Home" />
       <ScrollableContainer>
-        <View className="items-center py-8">
+        <View className="items-center py-4">
           <View
             className={`w-16 h-16 rounded-full items-center justify-center mb-4 ${isDark ? 'bg-purple-800' : 'bg-purple-100'}`}
           >
