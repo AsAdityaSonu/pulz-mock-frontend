@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, ActivityIndicator, ViewStyle } from 'react-native';
 import { LucideIcon } from 'lucide-react-native';
+import { useTheme } from '../context/ThemeContext';
 
 interface CircularButtonProps {
   icon: LucideIcon;
@@ -21,23 +22,26 @@ export const CircularButton: React.FC<CircularButtonProps> = ({
   disabled = false,
   style,
 }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   // Size logic
   const diameter = size === 'small' ? 36 : size === 'medium' ? 44 : 56;
 
-  // Variant logic
+  // Variant logic with theme
   let borderColor = '#7c3aed', bgColor = 'transparent', iconColor = '#7c3aed';
   if (variant === 'primary') {
-    borderColor = '#7c3aed';
-    bgColor = '#7c3aed';
+    borderColor = isDark ? '#a78bfa' : '#7c3aed';
+    bgColor = isDark ? '#7c3aed' : '#7c3aed';
     iconColor = '#fff';
   } else if (variant === 'secondary') {
-    borderColor = '#6b7280';
-    bgColor = '#6b7280';
+    borderColor = isDark ? '#374151' : '#6b7280';
+    bgColor = isDark ? '#374151' : '#6b7280';
     iconColor = '#fff';
   } else if (variant === 'outline') {
-    borderColor = '#7c3aed';
-    bgColor = 'transparent';
-    iconColor = '#7c3aed';
+    borderColor = isDark ? '#a78bfa' : '#7c3aed';
+    bgColor = isDark ? '#18181b' : 'transparent';
+    iconColor = isDark ? '#a78bfa' : '#7c3aed';
   }
 
   return (
