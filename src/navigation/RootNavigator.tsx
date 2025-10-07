@@ -12,9 +12,5 @@ export const RootNavigator: React.FC = () => {
     return <LoadingScreen />;
   }
 
-  return (
-    <NavigationContainer>
-      {user ? <TabNavigator /> : <AuthNavigator />}
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{user ? <TabNavigator /> : <AuthNavigator />}</NavigationContainer>;
 };

@@ -29,7 +29,9 @@ export const CircularButton: React.FC<CircularButtonProps> = ({
   const diameter = size === 'small' ? 36 : size === 'medium' ? 44 : 56;
 
   // Variant logic with theme
-  let borderColor = '#7c3aed', bgColor = 'transparent', iconColor = '#7c3aed';
+  let borderColor = '#7c3aed',
+    bgColor = 'transparent',
+    iconColor = '#7c3aed';
   if (variant === 'primary') {
     borderColor = isDark ? '#a78bfa' : '#7c3aed';
     bgColor = isDark ? '#7c3aed' : '#7c3aed';

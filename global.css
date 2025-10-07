@@ -13,11 +13,12 @@
 }
 
 /* Remove any potential scroll interference */
-body, html {
+body,
+html {
   overflow: visible;
   height: auto;
   touch-action: manipulation;
-  background-color: #121829; 
+  background-color: #121829;
 }
 
 /* Hide scroll bars while keeping scroll functionality */

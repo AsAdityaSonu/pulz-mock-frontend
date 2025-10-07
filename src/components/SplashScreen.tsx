@@ -58,14 +58,11 @@ export const SplashScreen: React.FC = () => {
         >
           <Zap size={40} color="#7c3aed" />
         </Animated.View>
-        
-        <Animated.Text
-          style={{ opacity: fadeAnim }}
-          className="text-5xl font-bold text-white mb-2"
-        >
+
+        <Animated.Text style={{ opacity: fadeAnim }} className="text-5xl font-bold text-white mb-2">
           Pulz
         </Animated.Text>
-        
+
         <Animated.Text
           style={{ opacity: fadeAnim }}
           className="text-purple-200 text-lg font-medium"

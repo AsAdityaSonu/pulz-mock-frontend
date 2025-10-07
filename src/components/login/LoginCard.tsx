@@ -37,7 +37,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
 
   return (
     <View className="px-5">
-      <View 
+      <View
         className={`
           ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} 
           border rounded-3xl px-5 py-6
@@ -84,9 +84,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
 
         {/* Forgot Password */}
         <TouchableOpacity className="mb-4 self-end">
-          <Text className="text-purple-600 font-semibold text-base">
-            Forgot Password?
-          </Text>
+          <Text className="text-purple-600 font-semibold text-base">Forgot Password?</Text>
         </TouchableOpacity>
 
         {/* Login Button - only this triggers handleLogin */}
@@ -98,9 +96,9 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             }
           }}
           loading={isLoading}
-          variant='outline'
+          variant="outline"
           size="medium"
-          style={{ 
+          style={{
             marginBottom: 24,
             shadowColor: '#8b5cf6',
             shadowOffset: { width: 0, height: 8 },
@@ -113,9 +111,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
         {/* Divider */}
         <View className="flex-row items-center mb-6">
           <View className={`flex-1 h-px ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`} />
-          <Text className={`mx-4 ${isDark ? 'text-gray-500' : 'text-gray-400'} text-sm`}>
-            or
-          </Text>
+          <Text className={`mx-4 ${isDark ? 'text-gray-500' : 'text-gray-400'} text-sm`}>or</Text>
           <View className={`flex-1 h-px ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`} />
         </View>
 
@@ -125,9 +121,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             Don't have an account?{' '}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-            <Text className="text-purple-600 font-bold text-base">
-              Sign Up
-            </Text>
+            <Text className="text-purple-600 font-bold text-base">Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>

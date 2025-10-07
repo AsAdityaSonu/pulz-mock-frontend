@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Zap, Plus, Award, User } from 'lucide-react-native';
+import { Home, Zap, Plus, CirclePlus, Trophy, User } from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { HomeScreen } from '../screens/tabs/HomeScreen';
@@ -35,10 +35,10 @@ export const TabNavigator: React.FC = () => {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
-          marginTop: 0,  // Removed margin to eliminate space above labels
+          marginTop: 0,
         },
         tabBarIconStyle: {
-          marginBottom: 0,  // Adjusted to center icons better
+          marginBottom: 3,
         },
         tabBarAllowFontScaling: false,
       }}
@@ -72,16 +72,14 @@ export const TabNavigator: React.FC = () => {
         name="Create"
         component={CreateScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Plus size={size} color={color} strokeWidth={2} />
-          ),
+          tabBarIcon: ({ color, size }) => <CirclePlus size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tab.Screen
         name="Awards"
         component={AwardsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Award size={size} color={color} strokeWidth={2} />,
+          tabBarIcon: ({ color, size }) => <Trophy size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tab.Screen

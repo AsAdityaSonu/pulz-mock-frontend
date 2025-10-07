@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const token = await AsyncStorage.getItem('authToken');
       const userData = await AsyncStorage.getItem('userData');
-      
+
       if (token && userData) {
         setUser(JSON.parse(userData));
       }

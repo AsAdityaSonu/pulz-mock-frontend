@@ -26,21 +26,15 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'primary':
-        return isDark
-          ? 'bg-purple-700 border-purple-700'
-          : 'bg-purple-600 border-purple-600';
+        return isDark ? 'bg-purple-700 border-purple-700' : 'bg-purple-600 border-purple-600';
       case 'secondary':
-        return isDark
-          ? 'bg-gray-800 border-gray-700'
-          : 'bg-gray-600 border-gray-600';
+        return isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-600 border-gray-600';
       case 'outline':
         return isDark
           ? 'bg-gray-800 border-purple-400 border-2'
           : 'bg-white border-purple-600 border-2';
       default:
-        return isDark
-          ? 'bg-purple-700 border-purple-700'
-          : 'bg-purple-600 border-purple-600';
+        return isDark ? 'bg-purple-700 border-purple-700' : 'bg-purple-600 border-purple-600';
     }
   };
 
@@ -87,17 +81,17 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
       `}
     >
       {loading ? (
-        <ActivityIndicator 
-          size="small" 
-          color={variant === 'outline' ? (isDark ? '#a78bfa' : '#7c3aed') : '#ffffff'} 
+        <ActivityIndicator
+          size="small"
+          color={variant === 'outline' ? (isDark ? '#a78bfa' : '#7c3aed') : '#ffffff'}
         />
       ) : (
         <>
           {Icon && (
-            <Icon 
-              size={20} 
-              color={variant === 'outline' ? (isDark ? '#a78bfa' : '#7c3aed') : '#ffffff'} 
-              style={{ marginRight: 8 }} 
+            <Icon
+              size={20}
+              color={variant === 'outline' ? (isDark ? '#a78bfa' : '#7c3aed') : '#ffffff'}
+              style={{ marginRight: 8 }}
             />
           )}
           <Text className={getTextStyles()}>{title}</Text>

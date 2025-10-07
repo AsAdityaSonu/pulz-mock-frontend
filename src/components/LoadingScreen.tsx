@@ -11,9 +11,7 @@ export const LoadingScreen: React.FC = () => {
       <View className="items-center">
         <Text className={`text-4xl font-bold text-purple-600 mb-4`}>Pulz</Text>
         <ActivityIndicator size="large" color="#7c3aed" />
-        <Text className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          Loading...
-        </Text>
+        <Text className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Loading...</Text>
       </View>
     </View>
   );

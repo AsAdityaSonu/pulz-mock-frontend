@@ -1,0 +1,8 @@
+# Prettier ignore rules
+# Add files or folders below to exclude them from formatting
+node_modules/
+build/
+dist/
+coverage/
+.next/
+.expo/

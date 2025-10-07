@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,18 +10,18 @@ import {
   StatusBar,
   Dimensions,
   Animated,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
-import { ThemeSwitch } from "../components/ThemeSwitch";
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeSwitch } from '../components/ThemeSwitch';
 import {
   Step1BasicInfo,
   Step2ContactInfo,
   Step3Security,
   Step4Privacy,
   Step5Interests,
-} from "../components/signup";
+} from '../components/signup';
 
 interface SignupScreenProps {
   navigation: any;
@@ -29,14 +29,14 @@ interface SignupScreenProps {
 
 export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [formData, setFormData] = useState({
-    user_name: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    date_of_birth: "",
-    password: "",
-    confirmPassword: "",
+    user_name: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    date_of_birth: '',
+    password: '',
+    confirmPassword: '',
     is_private: false,
     interests: [] as string[],
   });
@@ -49,8 +49,8 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   const { register } = useAuth();
   const { theme } = useTheme();
-  const isDark = theme === "dark";
-  const { height } = Dimensions.get("window");
+  const isDark = theme === 'dark';
+  const { height } = Dimensions.get('window');
 
   useEffect(() => {
     // Animate progress bar width
@@ -62,10 +62,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   }, [currentStep]);
 
   // direction: 'next' | 'back'
-  const animateStepChange = (
-    callback: () => void,
-    direction: "next" | "back"
-  ) => {
+  const animateStepChange = (callback: () => void, direction: 'next' | 'back') => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -73,13 +70,13 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
-        toValue: direction === "next" ? 100 : -100,
+        toValue: direction === 'next' ? 100 : -100,
         duration: 200,
         useNativeDriver: true,
       }),
     ]).start(() => {
       callback();
-      slideAnim.setValue(direction === "next" ? -100 : 100);
+      slideAnim.setValue(direction === 'next' ? -100 : 100);
       Animated.parallel([
         Animated.timing(fadeAnim, {
           toValue: 1,
@@ -95,10 +92,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     });
   };
 
-  const handleInputChange = (
-    field: string,
-    value: string | boolean | string[]
-  ) => {
+  const handleInputChange = (field: string, value: string | boolean | string[]) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -110,12 +104,12 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const { user_name, first_name, last_name } = formData;
 
     if (!user_name.trim() || !first_name.trim() || !last_name.trim()) {
-      Alert.alert("Error", "Please fill in all fields");
+      Alert.alert('Error', 'Please fill in all fields');
       return false;
     }
 
     if (user_name.length < 3) {
-      Alert.alert("Error", "Username must be at least 3 characters");
+      Alert.alert('Error', 'Username must be at least 3 characters');
       return false;
     }
 
@@ -126,13 +120,13 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const { email, phone_number } = formData;
 
     if (!email.trim() || !phone_number.trim()) {
-      Alert.alert("Error", "Please fill in all fields");
+      Alert.alert('Error', 'Please fill in all fields');
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Alert.alert("Error", "Please enter a valid email address");
+      Alert.alert('Error', 'Please enter a valid email address');
       return false;
     }
 
@@ -143,24 +137,24 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const { password, confirmPassword, date_of_birth } = formData;
 
     if (!password || !confirmPassword || !date_of_birth.trim()) {
-      Alert.alert("Error", "Please fill in all fields");
+      Alert.alert('Error', 'Please fill in all fields');
       return false;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
+      Alert.alert('Error', 'Passwords do not match');
       return false;
     }
 
     if (password.length < 6) {
-      Alert.alert("Error", "Password must be at least 6 characters");
+      Alert.alert('Error', 'Password must be at least 6 characters');
       return false;
     }
 
     // Basic date validation (YYYY-MM-DD format)
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(date_of_birth)) {
-      Alert.alert("Error", "Please enter date in YYYY-MM-DD format");
+      Alert.alert('Error', 'Please enter date in YYYY-MM-DD format');
       return false;
     }
 
@@ -170,7 +164,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const age = today.getFullYear() - birthDate.getFullYear();
 
     if (age < 13) {
-      Alert.alert("Error", "You must be at least 13 years old to sign up");
+      Alert.alert('Error', 'You must be at least 13 years old to sign up');
       return false;
     }
 
@@ -197,19 +191,19 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         isValid = false;
     }
     if (isValid && currentStep < 5) {
-      animateStepChange(() => setCurrentStep(currentStep + 1), "back");
+      animateStepChange(() => setCurrentStep(currentStep + 1), 'back');
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
-      animateStepChange(() => setCurrentStep(currentStep - 1), "next");
+      animateStepChange(() => setCurrentStep(currentStep - 1), 'next');
     }
   };
 
   const handleComplete = async () => {
     if (formData.interests.length !== 3) {
-      Alert.alert("Error", "Please select exactly 3 games");
+      Alert.alert('Error', 'Please select exactly 3 games');
       return;
     }
 
@@ -230,10 +224,10 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
       const success = await register(userData);
       if (!success) {
-        Alert.alert("Error", "Failed to create account. Please try again.");
+        Alert.alert('Error', 'Failed to create account. Please try again.');
       }
     } catch (error) {
-      Alert.alert("Error", "Registration failed. Please try again.");
+      Alert.alert('Error', 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -313,24 +307,20 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView
-      className={`flex-1 ${isDark ? "bg-gray-900" : "bg-purple-50"}`}
-    >
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`}>
       <StatusBar
-        barStyle={isDark ? "light-content" : "dark-content"}
-        backgroundColor={isDark ? "#111827" : "#f8faff"}
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={isDark ? '#111827' : '#f8faff'}
         translucent={false}
       />
 
       {/* Background Gradient Overlay */}
-      <View
-        className={`absolute inset-0 ${isDark ? "bg-gray-900" : "bg-purple-50"}`}
-      />
+      <View className={`absolute inset-0 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`} />
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
         <ScrollView
           style={{ flex: 1 }}
@@ -345,23 +335,23 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               <View className="flex-1">
                 <View className="flex-row items-center mb-2">
                   <Text
-                    className={`text-4xl font-medium ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                    className={`text-4xl font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
                   >
                     Join
                   </Text>
                 </View>
                 <Text
-                  className={`text-6xl font-bold -mt-1 ${isDark ? "text-purple-600" : "text-purple-600"} mb-2`}
+                  className={`text-6xl font-bold -mt-1 ${isDark ? 'text-purple-600' : 'text-purple-600'} mb-2`}
                 >
                   Pulz
                 </Text>
                 <Text
-                  className={`text-xl mt-1 ${isDark ? "text-purple-400" : "text-purple-600"} font-semibold`}
+                  className={`text-xl mt-1 ${isDark ? 'text-purple-400' : 'text-purple-600'} font-semibold`}
                 >
                   Step {currentStep} of 5
                 </Text>
                 <View
-                  className={`h-0.5 w-12 mt-1 ${isDark ? "bg-purple-400" : "bg-purple-600"} rounded-full`}
+                  className={`h-0.5 w-12 mt-1 ${isDark ? 'bg-purple-400' : 'bg-purple-600'} rounded-full`}
                 />
               </View>
               <View className="mt-2">
@@ -371,10 +361,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           </View>
 
           {/* Step Content Container */}
-          <View
-            className="flex-1 justify-center px-6 -mt-10"
-            style={{ minHeight: height * 0.6 }}
-          >
+          <View className="flex-1 justify-center px-6 -mt-10" style={{ minHeight: height * 0.6 }}>
             <Animated.View
               style={{
                 opacity: fadeAnim,
@@ -388,15 +375,11 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
           {/* Sign In Link */}
           <View className="px-6 pb-8" style={{ minHeight: height * 0.1 }}>
             <View className="flex-row justify-center items-center pt-6">
-              <Text
-                className={`text-base ${isDark ? "text-gray-400" : "text-gray-600"}`}
-              >
-                Already have an account?{" "}
+              <Text className={`text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                Already have an account?{' '}
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                <Text className="text-purple-600 font-bold text-base">
-                  Sign In
-                </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text className="text-purple-600 font-bold text-base">Sign In</Text>
               </TouchableOpacity>
             </View>
           </View>

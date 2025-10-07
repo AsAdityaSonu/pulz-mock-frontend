@@ -23,7 +23,7 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
   onInputChange,
   onNext,
   onBack,
-  isValid
+  isValid,
 }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -34,21 +34,28 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
     <View className="py-4">
       {/* Header */}
       <View className="items-center mb-12">
-        <View className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
-          isDark ? 'bg-green-900' : 'bg-green-100'
-        }`} style={{
-          shadowColor: '#10b981',
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 4,
-        }}>
+        <View
+          className={`w-20 h-20 rounded-full items-center justify-center mb-6 ${
+            isDark ? 'bg-green-900' : 'bg-green-100'
+          }`}
+          style={{
+            shadowColor: '#10b981',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 4,
+          }}
+        >
           <Lock size={32} color={isDark ? '#34d399' : '#10b981'} />
         </View>
-        <Text className={`text-3xl font-bold mb-3 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <Text
+          className={`text-3xl font-bold mb-3 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}
+        >
           Secure Your Account
         </Text>
-        <Text className={`text-center px-6 text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
+        <Text
+          className={`text-center px-6 text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}
+        >
           Create a strong password and confirm your age
         </Text>
       </View>
@@ -84,10 +91,9 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
       </View>
 
       {/* Helper Text */}
-      <Text
-        className={`text-sm mb-10 text-center ${isDark ? 'text-gray-500' : 'text-gray-500'}`}
-      >
-        Password must be at least 6 characters. You must be at least 13 years old to join. Your birthday won't be shown publicly.
+      <Text className={`text-sm mb-10 text-center ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+        Password must be at least 6 characters. You must be at least 13 years old to join. Your
+        birthday won't be shown publicly.
       </Text>
 
       {/* Navigation Buttons */}
@@ -98,11 +104,7 @@ export const Step3Security: React.FC<Step3SecurityProps> = ({
           disabled={false}
           style={{ marginRight: 12 }}
         />
-        <CircularButton
-          icon={ArrowRight}
-          onPress={onNext}
-          disabled={!isValid}
-        />
+        <CircularButton icon={ArrowRight} onPress={onNext} disabled={!isValid} />
       </View>
     </View>
   );

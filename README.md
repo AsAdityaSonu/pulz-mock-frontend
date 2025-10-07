@@ -22,10 +22,12 @@ A modern, sleek social media application built with React Native, Expo, and Type
 ## 📱 Screens
 
 ### Authentication
+
 - **Login Screen**: Email/password login with theme toggle
 - **Signup Screen**: Account creation with form validation
 
 ### Main App (Tab Navigation)
+
 - **Home**: Social feed and community posts
 - **Streaks**: Daily habit tracking and goal management
 - **Create**: Content creation hub (posts, photos, videos)
@@ -45,6 +47,7 @@ A modern, sleek social media application built with React Native, Expo, and Type
 ## 🔧 Backend Integration
 
 The app connects to a Node.js backend API with the following endpoints:
+
 - `POST /api/auth/login` - User authentication
 - `POST /api/auth/signup` - Account registration
 
