@@ -3,7 +3,6 @@ import { View, Text, TextInput } from "react-native";
 import { Mail, Phone } from "lucide-react-native";
 import { useTheme } from "../../context/ThemeContext";
 import { CustomInput } from "../CustomInput";
-import { CustomButton } from "../CustomButton";
 import { ArrowLeft, ArrowRight } from 'lucide-react-native';
 import { CircularButton } from '../CustomCircularButton';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://192.168.1.5:5001/api'; // Replace with your computer's actual IP address
+const API_BASE_URL = 'https://pulz-mock-backend.vercel.app/api'; // Replace with your computer's actual IP address
 
 interface RegisterData {
   user_name: string;
