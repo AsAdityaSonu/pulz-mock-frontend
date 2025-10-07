@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LogOut, Settings, Edit, Bell, Shield, HelpCircle } from 'lucide-react-native';
-import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
-import { Header } from '../components/Header';
-import { ScrollableContainer } from '../components/ScrollableContainer';
+import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../components/Header';
+import { ScrollableContainer } from '../../components/ScrollableContainer';
 
 export const ProfileScreen: React.FC = () => {
   const { user, logout } = useAuth();

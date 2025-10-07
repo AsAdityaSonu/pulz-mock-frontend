@@ -14,11 +14,11 @@ export { ScrollableContainer } from './components/ScrollableContainer';
 // Screen exports
 export { LoginScreen } from './screens/LoginScreen';
 export { SignupScreen } from './screens/SignupScreen';
-export { HomeScreen } from './screens/HomeScreen';
-export { StreaksScreen } from './screens/StreaksScreen';
-export { CreateScreen } from './screens/CreateScreen';
-export { AwardsScreen } from './screens/AwardsScreen';
-export { ProfileScreen } from './screens/ProfileScreen';
+export { HomeScreen } from './screens/tabs/HomeScreen';
+export { StreaksScreen } from './screens/tabs/StreaksScreen';
+export { CreateScreen } from './screens/tabs/CreateScreen';
+export { AwardsScreen } from './screens/tabs/AwardsScreen';
+export { ProfileScreen } from './screens/tabs/ProfileScreen';
 
 // Navigation exports
 export { AuthNavigator } from './navigation/AuthNavigator';

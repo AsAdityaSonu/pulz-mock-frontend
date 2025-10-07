@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Award, Trophy, Star, Medal } from 'lucide-react-native';
-import { useTheme } from '../context/ThemeContext';
-import { Header } from '../components/Header';
-import { ScrollableContainer } from '../components/ScrollableContainer';
+import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../components/Header';
+import { ScrollableContainer } from '../../components/ScrollableContainer';
 
 const AwardsScreenComponent: React.FC = () => {
   const { theme } = useTheme();

@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Zap, Plus, Award, User } from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
-import { HomeScreen } from '../screens/HomeScreen';
-import { StreaksScreen } from '../screens/StreaksScreen';
-import { CreateScreen } from '../screens/CreateScreen';
-import { AwardsScreen } from '../screens/AwardsScreen';
-import { ProfileScreen } from '../screens/ProfileScreen';
+import { HomeScreen } from '../screens/tabs/HomeScreen';
+import { StreaksScreen } from '../screens/tabs/StreaksScreen';
+import { CreateScreen } from '../screens/tabs/CreateScreen';
+import { AwardsScreen } from '../screens/tabs/AwardsScreen';
+import { ProfileScreen } from '../screens/tabs/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +25,7 @@ export const TabNavigator: React.FC = () => {
         tabBarStyle: {
           backgroundColor: isDark ? '#111827' : '#ffffff',
           borderTopColor: isDark ? '#374151' : '#e5e7eb',
-          borderTopWidth: 1,
+          borderTopWidth: 0.5,
           height: 85,
           paddingBottom: 10,
           paddingTop: 5,
@@ -58,14 +58,14 @@ export const TabNavigator: React.FC = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tab.Screen
         name="Streaks"
         component={StreaksScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Zap size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Zap size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tab.Screen
@@ -73,7 +73,7 @@ export const TabNavigator: React.FC = () => {
         component={CreateScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Plus size={size} color={color} strokeWidth={3} />
+            <Plus size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
@@ -81,14 +81,14 @@ export const TabNavigator: React.FC = () => {
         name="Awards"
         component={AwardsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Award size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Award size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <User size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <User size={size} color={color} strokeWidth={2} />,
         }}
       />
     </Tab.Navigator>

@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, Image, Type, Video } from 'lucide-react-native';
-import { useTheme } from '../context/ThemeContext';
-import { Header } from '../components/Header';
-import { CustomButton } from '../components/CustomButton';
-import { ScrollableContainer } from '../components/ScrollableContainer';
+import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../components/Header';
+import { CustomButton } from '../../components/CustomButton';
+import { ScrollableContainer } from '../../components/ScrollableContainer';
 
 export const CreateScreen: React.FC = () => {
   const { theme } = useTheme();
