@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Zap, Plus, CirclePlus, Trophy, User } from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
-import { HomeScreen } from '../screens/tabs/HomeScreen';
+import { HomeScreen } from '../screens/tabs/HomeScreen/HomeScreen';
 import { StreaksScreen } from '../screens/tabs/StreaksScreen';
 import { CreateScreen } from '../screens/tabs/CreateScreen';
 import { AwardsScreen } from '../screens/tabs/AwardsScreen';

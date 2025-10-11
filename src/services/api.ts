@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://172.16.37.17:5001/api';
+const API_BASE_URL = 'http://172.16.38.91:5001/api';
 
 interface RegisterData {
   user_name: string;
@@ -32,17 +32,25 @@ export const apiService = {
   },
 
   async register(userData: RegisterData) {
+    // Clean phone number - remove spaces and non-digit characters except +
+    const cleanedUserData = {
+      ...userData,
+      phone_number: userData.phone_number.replace(/\s+/g, '').replace(/[^\d+]/g, '')
+    };
+
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(cleanedUserData),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
+      // Log detailed error for debugging
+      console.log('Registration error response:', data);
       throw new Error(data.message || 'Registration failed');
     }
 
@@ -97,6 +105,96 @@ export const apiService = {
 
     if (!response.ok) {
       throw new Error(data.message || 'Token verification failed');
+    }
+
+    return data;
+  },
+
+  async getFeed(page: number = 1, limit: number = 10) {
+    const token = await import('@react-native-async-storage/async-storage').then(m => 
+      m.default.getItem('authToken')
+    );
+
+    const response = await fetch(`${API_BASE_URL}/posts/feed?page=${page}&limit=${limit}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch feed');
+    }
+
+    return data;
+  },
+
+  async likePost(postId: string) {
+    const token = await import('@react-native-async-storage/async-storage').then(m => 
+      m.default.getItem('authToken')
+    );
+
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}/like`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to like post');
+    }
+
+    return data;
+  },
+
+  async addComment(postId: string, content: string) {
+    const token = await import('@react-native-async-storage/async-storage').then(m => 
+      m.default.getItem('authToken')
+    );
+
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}/comment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to add comment');
+    }
+
+    return data;
+  },
+
+  async createPost(content: string, sport: string) {
+    const token = await import('@react-native-async-storage/async-storage').then(m => 
+      m.default.getItem('authToken')
+    );
+
+    const response = await fetch(`${API_BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ content, sport }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to create post');
     }
 
     return data;
