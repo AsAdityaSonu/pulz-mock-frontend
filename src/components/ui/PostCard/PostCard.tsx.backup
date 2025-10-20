@@ -66,7 +66,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   return (
     <TouchableOpacity
       style={[styles.container, { backgroundColor: isDark ? '#1f2937' : '#ffffff' }]}
-      onPress={() => onComment(post.id)}
+      onPress={() => onPress(post.id)}
       activeOpacity={0.98}
     >
       {/* Header */}
@@ -116,7 +116,7 @@ export const PostCard: React.FC<PostCardProps> = ({
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={() => onComment(post.id)}>
+        <TouchableOpacity style={styles.actionButton} onPress={handleCommentPress}>
           <Ionicons name="chatbubble-outline" size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
           <Text style={[styles.actionText, { color: isDark ? '#9ca3af' : '#6b7280' }]}>
             {formatCompactNumber(post.commentsList?.length || 0)}
@@ -251,7 +251,7 @@ export const PostCard: React.FC<PostCardProps> = ({
 
           {/* View More Comments Link */}
           {post.commentsList.length > 1 && (
-            <TouchableOpacity style={{ marginBottom: 8 }} onPress={() => onComment(post.id)}>
+            <TouchableOpacity style={{ marginBottom: 8 }} onPress={() => onPress(post.id)}>
               <Text style={{ color: isDark ? '#9ca3af' : '#6b7280', fontSize: 13, fontWeight: '500' }}>
                 View {post.commentsList.length - 1} more comment
                 {post.commentsList.length > 2 ? 's' : ''}

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, FlatList, RefreshControl, Alert, Modal, StatusBar, Text } from 'react-native';
+import { View, FlatList, RefreshControl, Alert, Modal, StatusBar, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './HomeScreen.styles';
 import { PostCard } from '../../../components/ui/PostCard/PostCard';
 import { PostDetailsScreen } from '../../PostDetailsScreen/PostDetailsScreen';
 import { WelcomeCard } from '../../../components/common/WelcomeCard/WelcomeCard';
-import { Header } from '../../../components/Header';
 import { useTheme } from '../../../context/ThemeContext';
 import { useAuth } from '../../../context/AuthContext';
 import apiService from '../../../services/api';
@@ -279,77 +278,73 @@ export const HomeScreen: React.FC = () => {
 
   if (loading) {
     return (
-      <SafeAreaView
-        edges={['top', 'left', 'right']}
-        className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}
-      >
+      <View className={`flex-1 justify-center items-center ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`}>
         <StatusBar
           barStyle={isDark ? 'light-content' : 'dark-content'}
-          backgroundColor={isDark ? '#111827' : '#f9fafb'}
+          backgroundColor={isDark ? '#111827' : '#f8faff'}
           translucent={false}
         />
-        <Header title="Home" />
-        <View className="flex-1 justify-center items-center">
+        <SafeAreaView className="flex-1 justify-center items-center">
           <Text className={`text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
             Loading posts...
           </Text>
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView
-      edges={['top', 'left', 'right']}
-      className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}
-    >
+    <View className={`flex-1 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`}>
       <StatusBar
         barStyle={isDark ? 'light-content' : 'dark-content'}
-        backgroundColor={isDark ? '#111827' : '#f9fafb'}
+        backgroundColor={isDark ? '#111827' : '#f8faff'}
         translucent={false}
       />
-      <Header title="Home" />
-      
-      <FlatList
-        data={posts}
-        renderItem={renderPost}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }}
-        ListHeaderComponent={renderHeader}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            colors={['#8b5cf6']}
-            tintColor="#8b5cf6"
-          />
-        }
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() => (
-          <View className="flex-1 justify-center items-center py-20">
-            <Text className={`text-lg text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              No posts available.{'\n'}Pull to refresh!
-            </Text>
-          </View>
-        )}
-      />
+      <SafeAreaView className="flex-1">
+        {/* Background Overlay */}
+        <View className={`absolute inset-0 ${isDark ? 'bg-gray-900' : 'bg-purple-50'}`} />
+        
+        <FlatList
+          data={posts}
+          renderItem={renderPost}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.contentContainer}
+          ListHeaderComponent={renderHeader}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              colors={['#8b5cf6']}
+              tintColor="#8b5cf6"
+            />
+          }
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <View className="flex-1 justify-center items-center py-20">
+              <Text className={`text-lg text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                No posts available.{'\n'}Pull to refresh!
+              </Text>
+            </View>
+          )}
+        />
 
-      {/* Post Detail Modal */}
-      <Modal 
-        visible={showPostDetail} 
-        animationType="slide" 
-        presentationStyle="pageSheet"
-      >
-        {selectedPost && (
-          <PostDetailsScreen
-            post={selectedPost}
-            onBack={handleClosePostDetail}
-            onAddComment={handleAddComment}
-            onLike={handleLike}
-            onCommentLike={handleCommentLike}
-          />
-        )}
-      </Modal>
-    </SafeAreaView>
+        {/* Post Detail Modal */}
+        <Modal 
+          visible={showPostDetail} 
+          animationType="slide" 
+          presentationStyle="pageSheet"
+        >
+          {selectedPost && (
+            <PostDetailsScreen
+              post={selectedPost}
+              onBack={handleClosePostDetail}
+              onAddComment={handleAddComment}
+              onLike={handleLike}
+              onCommentLike={handleCommentLike}
+            />
+          )}
+        </Modal>
+      </SafeAreaView>
+    </View>
   );
 };
