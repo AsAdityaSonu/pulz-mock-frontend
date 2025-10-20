@@ -12,11 +12,11 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Menu, CheckCircle } from 'lucide-react-native';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { Header } from '../../components/Header';
-import { ThemeSwitch } from '../../components/ThemeSwitch';
+import { SettingsPanel } from '../../components/SettingsPanel';
 import apiService from '../../services/api';
 
 const { width } = Dimensions.get('window');
@@ -63,14 +63,6 @@ interface UserStats {
     joinedDate: string;
     isVerified: boolean;
   };
-}
-
-interface SettingsItem {
-  icon: string;
-  title: string;
-  subtitle: string;
-  color: string;
-  onPress: () => void;
 }
 
 export const ProfileScreen: React.FC = () => {
@@ -200,7 +192,7 @@ export const ProfileScreen: React.FC = () => {
           title="Profile"
           rightComponent={
             <TouchableOpacity onPress={toggleRightPanel}>
-              <Ionicons name="menu" size={24} color={isDark ? '#ffffff' : '#111827'} />
+              <Menu size={24} color={isDark ? '#ffffff' : '#111827'} />
             </TouchableOpacity>
           }
         />
@@ -227,7 +219,7 @@ export const ProfileScreen: React.FC = () => {
         title="Profile"
         rightComponent={
           <TouchableOpacity onPress={toggleRightPanel}>
-            <Ionicons name="menu" size={24} color={isDark ? '#ffffff' : '#111827'} />
+            <Menu size={24} color={isDark ? '#ffffff' : '#111827'} />
           </TouchableOpacity>
         }
       />
@@ -275,8 +267,7 @@ export const ProfileScreen: React.FC = () => {
                 {profile?.full_name}
               </Text>
               {profile?.is_verified && (
-                <Ionicons
-                  name="checkmark-circle"
+                <CheckCircle
                   size={20}
                   color="#3b82f6"
                   style={{ marginLeft: 8 }}
@@ -377,316 +368,14 @@ export const ProfileScreen: React.FC = () => {
         )}
       </ScrollView>
 
-      {/* Right Panel Modal */}
-      <Modal
+      {/* Settings Panel */}
+      <SettingsPanel
         visible={showRightPanel}
-        animationType="none"
-        transparent={true}
-        onRequestClose={toggleRightPanel}
-      >
-        <View style={{ flex: 1 }}>
-          {/* Overlay */}
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}
-            onPress={toggleRightPanel}
-            activeOpacity={1}
-          />
-
-          {/* Right Panel */}
-          <Animated.View
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              width: width * 0.8,
-              transform: [{ translateX: slideAnim }],
-            }}
-            className={`${isDark ? 'bg-gray-900' : 'bg-white'}`}
-          >
-            <SafeAreaView className="flex-1">
-              {/* Panel Header */}
-              <View
-                className={`px-6 py-6 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
-              >
-                <View className="flex-row items-center justify-between">
-                  <View>
-                    <Text
-                      className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}
-                    >
-                      Settings
-                    </Text>
-                    <Text className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                      Customize your experience
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={toggleRightPanel}
-                    className={`w-10 h-10 rounded-full items-center justify-center ${
-                      isDark ? 'bg-gray-800' : 'bg-gray-100'
-                    }`}
-                  >
-                    <Ionicons name="close" size={20} color={isDark ? '#ffffff' : '#111827'} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              {/* Panel Content */}
-              <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-                {/* Theme Section */}
-                <View className="px-6 py-6">
-                  <Text
-                    className={`text-lg font-semibold mb-6 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
-                  >
-                    Appearance
-                  </Text>
-
-                  <TouchableOpacity className="flex-row items-center justify-between py-4">
-                    <View className="flex-row items-center flex-1">
-                      <View
-                        className={`w-12 h-12 rounded-full items-center justify-center ${
-                          isDark ? 'bg-purple-900' : 'bg-purple-100'
-                        }`}
-                      >
-                        <Ionicons
-                          name={isDark ? 'moon' : 'sunny'}
-                          size={22}
-                          color={isDark ? '#a855f7' : '#8b5cf6'}
-                        />
-                      </View>
-                      <View className="ml-4 flex-1">
-                        <Text
-                          className={`font-semibold text-base ${
-                            isDark ? 'text-white' : 'text-gray-900'
-                          }`}
-                        >
-                          Theme
-                        </Text>
-                        <Text
-                          className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
-                        >
-                          {isDark ? 'Dark Mode' : 'Light Mode'}
-                        </Text>
-                      </View>
-                    </View>
-                    <ThemeSwitch />
-                  </TouchableOpacity>
-                </View>
-
-                {/* Divider */}
-                <View className={`h-px mx-6 ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
-
-                {/* Settings Section */}
-                <View className="px-6 py-6">
-                  <Text
-                    className={`text-lg font-semibold mb-6 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
-                  >
-                    Settings
-                  </Text>
-
-                  {(
-                    [
-                      {
-                        icon: 'person-outline',
-                        title: 'Account Settings',
-                        subtitle: 'Privacy and security',
-                        color: '#3b82f6',
-                        onPress: () => {
-                          toggleRightPanel();
-                          // Navigate to settings
-                        },
-                      },
-                      {
-                        icon: 'notifications-outline',
-                        title: 'Notifications',
-                        subtitle: 'Manage your notifications',
-                        color: '#f59e0b',
-                        onPress: () => {
-                          toggleRightPanel();
-                          // Navigate to notifications
-                        },
-                      },
-                      {
-                        icon: 'shield-checkmark-outline',
-                        title: 'Privacy',
-                        subtitle: 'Control your privacy settings',
-                        color: '#10b981',
-                        onPress: () => {
-                          toggleRightPanel();
-                          // Navigate to privacy
-                        },
-                      },
-                      {
-                        icon: 'help-circle-outline',
-                        title: 'Help & Support',
-                        subtitle: 'Get help and contact us',
-                        color: '#8b5cf6',
-                        onPress: () => {
-                          toggleRightPanel();
-                          // Navigate to help
-                        },
-                      },
-                    ] as SettingsItem[]
-                  ).map((item, index) => (
-                    <View key={index}>
-                      <TouchableOpacity
-                        onPress={item.onPress}
-                        className="flex-row items-center py-4"
-                      >
-                        <View
-                          className="w-12 h-12 rounded-full items-center justify-center"
-                          style={{ backgroundColor: item.color + '20' }}
-                        >
-                          <Ionicons name={item.icon} size={22} color={item.color} />
-                        </View>
-                        <View className="ml-4 flex-1">
-                          <Text
-                            className={`font-semibold text-base ${
-                              isDark ? 'text-white' : 'text-gray-900'
-                            }`}
-                          >
-                            {item.title}
-                          </Text>
-                          <Text
-                            className={`text-sm mt-0.5 ${
-                              isDark ? 'text-gray-400' : 'text-gray-600'
-                            }`}
-                          >
-                            {item.subtitle}
-                          </Text>
-                        </View>
-                        <Ionicons
-                          name="chevron-forward"
-                          size={20}
-                          color={isDark ? '#6b7280' : '#9ca3af'}
-                        />
-                      </TouchableOpacity>
-                      {index < 3 && (
-                        <View className={`h-px ml-16 ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`} />
-                      )}
-                    </View>
-                  ))}
-                </View>
-
-                {/* Divider */}
-                <View className={`h-px mx-6 ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
-
-                {/* About Section */}
-                <View className="px-6 py-6">
-                  <Text
-                    className={`text-lg font-semibold mb-6 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
-                  >
-                    About
-                  </Text>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      toggleRightPanel();
-                      Alert.alert(
-                        'About Pulz',
-                        'Version 1.0.0\nBuilt with React Native\n\nA modern social platform for sports enthusiasts and gamers.'
-                      );
-                    }}
-                    className="flex-row items-center py-4"
-                  >
-                    <View
-                      className={`w-12 h-12 rounded-full items-center justify-center ${
-                        isDark ? 'bg-gray-800' : 'bg-gray-100'
-                      }`}
-                    >
-                      <Ionicons
-                        name="information-circle-outline"
-                        size={22}
-                        color={isDark ? '#9ca3af' : '#6b7280'}
-                      />
-                    </View>
-                    <View className="ml-4 flex-1">
-                      <Text
-                        className={`font-semibold text-base ${
-                          isDark ? 'text-white' : 'text-gray-900'
-                        }`}
-                      >
-                        App Info
-                      </Text>
-                      <Text
-                        className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
-                      >
-                        Version, terms & privacy
-                      </Text>
-                    </View>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={20}
-                      color={isDark ? '#6b7280' : '#9ca3af'}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                {/* Divider */}
-                <View className={`h-px mx-6 ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
-
-                {/* Logout Section */}
-                <View className="px-6 py-6">
-                  <TouchableOpacity
-                    onPress={() => {
-                      toggleRightPanel();
-                      handleLogout();
-                    }}
-                    className="flex-row items-center py-4"
-                  >
-                    <View
-                      className={`w-12 h-12 rounded-full items-center justify-center ${
-                        isDark ? 'bg-red-900' : 'bg-red-100'
-                      }`}
-                    >
-                      <Ionicons
-                        name="log-out-outline"
-                        size={22}
-                        color={isDark ? '#f87171' : '#dc2626'}
-                      />
-                    </View>
-                    <View className="ml-4 flex-1">
-                      <Text
-                        className={`font-semibold text-base ${
-                          isDark ? 'text-red-400' : 'text-red-600'
-                        }`}
-                      >
-                        Sign Out
-                      </Text>
-                      <Text
-                        className={`text-sm mt-0.5 ${isDark ? 'text-red-500' : 'text-red-500'}`}
-                      >
-                        Sign out of your account
-                      </Text>
-                    </View>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={20}
-                      color={isDark ? '#f87171' : '#dc2626'}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                {/* Bottom Spacing */}
-                <View className="h-8" />
-              </ScrollView>
-            </SafeAreaView>
-          </Animated.View>
-        </View>
-      </Modal>
+        onClose={toggleRightPanel}
+        slideAnim={slideAnim}
+        isDark={isDark}
+        onLogout={handleLogout}
+      />
 
       {/* Edit Profile Modal */}
       <Modal
