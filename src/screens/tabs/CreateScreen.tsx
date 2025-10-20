@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, TouchableOpacity, TextInput, ScrollView, Alert, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { 
+  PlusCircle, 
+  FileText, 
+  Camera, 
+  Video, 
+  Mic, 
+  Lightbulb, 
+  Target,
+  Zap,
+  Calendar,
+  Trash2,
+  X
+} from 'lucide-react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { Header } from '../../components/Header';
 import apiService from '../../services/api';
@@ -144,7 +156,7 @@ export const CreateScreen: React.FC = () => {
         contentContainerStyle={{ paddingBottom: 20 }}
       >
         {/* Stats Overview */}
-        <View className={`mx-4 mt-6 mb-6 p-4 rounded-2xl ${
+        <View className={`mx-4 mt-6 mb-8 p-6 rounded-2xl ${
           isDark ? 'bg-gray-800' : 'bg-white'
         }`}
         style={{
@@ -154,28 +166,48 @@ export const CreateScreen: React.FC = () => {
           shadowRadius: 8,
           elevation: 5,
         }}>
+          {/* Header Section - Left Aligned */}
+          <View className="mb-6">
+            <View className="flex-row items-center mb-2">
+              <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${
+                isDark ? 'bg-purple-900' : 'bg-purple-100'
+              }`}>
+                <Target size={20} color="#8b5cf6" />
+              </View>
+              <View className="flex-1">
+                <Text className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  Your Progress
+                </Text>
+                <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Keep creating amazing content
+                </Text>
+              </View>
+            </View>
+          </View>
+          
+          {/* Stats Grid */}
           <View className="flex-row justify-around">
             <View className="items-center">
-              <Text className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <Text className={`text-2xl font-bold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
                 {userStats.totalPosts}
               </Text>
-              <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Text className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 Posts
               </Text>
             </View>
             <View className="items-center">
-              <Text className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <Text className={`text-2xl font-bold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
                 {userStats.totalLikes}
               </Text>
-              <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Text className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 Total Likes
               </Text>
             </View>
             <View className="items-center">
-              <Text className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <Text className={`text-2xl font-bold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
                 {userStats.currentStreak}
               </Text>
-              <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Text className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 Day Streak
               </Text>
             </View>
@@ -183,10 +215,10 @@ export const CreateScreen: React.FC = () => {
         </View>
 
         {/* Create Post Button */}
-        <View className="mx-4 mb-6">
+        <View className="mx-4 mb-8">
           <TouchableOpacity
             onPress={() => setShowCreateModal(true)}
-            className="bg-purple-500 p-4 rounded-2xl"
+            className="bg-purple-500 p-5 rounded-2xl"
             style={{
               shadowColor: '#8b5cf6',
               shadowOffset: { width: 0, height: 4 },
@@ -196,8 +228,8 @@ export const CreateScreen: React.FC = () => {
             }}
           >
             <View className="flex-row items-center justify-center">
-              <Ionicons name="add-circle" size={24} color="#ffffff" />
-              <Text className="text-white text-lg font-semibold ml-2">
+              <PlusCircle size={24} color="#ffffff" />
+              <Text className="text-white text-lg font-semibold ml-3">
                 Create New Post
               </Text>
             </View>
@@ -205,60 +237,72 @@ export const CreateScreen: React.FC = () => {
         </View>
 
         {/* Quick Actions */}
-        <View className="mx-4 mb-6">
-          <Text className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            Quick Actions
-          </Text>
+        <View className="mx-4 mb-8">
+          <View className="mb-6">
+            <Text className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Quick Actions
+            </Text>
+            <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              Choose your content type
+            </Text>
+          </View>
           <View className="flex-row flex-wrap justify-between">
             {[
-              { icon: 'document-text', title: 'Text Post', color: '#8b5cf6' },
-              { icon: 'camera', title: 'Photo', color: '#10b981' },
-              { icon: 'videocam', title: 'Video', color: '#f59e0b' },
-              { icon: 'mic', title: 'Audio', color: '#ef4444' },
-            ].map((action, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => setShowCreateModal(true)}
-                className={`w-[48%] mb-3 p-4 rounded-xl ${
-                  isDark ? 'bg-gray-800' : 'bg-white'
-                }`}
-                style={{
-                  shadowColor: '#000',
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 4,
-                  elevation: 2,
-                }}
-              >
-                <View className="items-center">
-                  <View className="w-12 h-12 rounded-full items-center justify-center mb-2"
-                    style={{ backgroundColor: action.color + '20' }}>
-                    <Ionicons 
-                      name={action.icon as keyof typeof Ionicons.glyphMap} 
-                      size={24} 
-                      color={action.color} 
-                    />
+              { icon: FileText, title: 'Text Post', color: '#8b5cf6' },
+              { icon: Camera, title: 'Photo', color: '#10b981' },
+              { icon: Video, title: 'Video', color: '#f59e0b' },
+              { icon: Mic, title: 'Audio', color: '#ef4444' },
+            ].map((action, index) => {
+              const IconComponent = action.icon;
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => setShowCreateModal(true)}
+                  className={`w-[48%] mb-4 p-5 rounded-xl ${
+                    isDark ? 'bg-gray-800' : 'bg-white'
+                  }`}
+                  style={{
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 2,
+                  }}
+                >
+                  <View className="items-center">
+                    <View className="w-14 h-14 rounded-full items-center justify-center mb-3"
+                      style={{ backgroundColor: action.color + '20' }}>
+                      <IconComponent 
+                        size={24} 
+                        color={action.color} 
+                      />
+                    </View>
+                    <Text className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {action.title}
+                    </Text>
                   </View>
-                  <Text className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {action.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
 
         {/* Drafts */}
         {drafts.length > 0 && (
-          <View className="mx-4 mb-6">
-            <Text className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Recent Drafts
-            </Text>
+          <View className="mx-4 mb-8">
+            <View className="mb-6">
+              <Text className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Recent Drafts
+              </Text>
+              <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                Continue where you left off
+              </Text>
+            </View>
             {drafts.slice(0, 3).map((draft) => (
               <TouchableOpacity
                 key={draft.id}
                 onPress={() => loadDraft(draft)}
-                className={`mb-3 p-4 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+                className={`mb-4 p-5 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'}`}
                 style={{
                   shadowColor: '#000',
                   shadowOffset: { width: 0, height: 2 },
@@ -268,16 +312,25 @@ export const CreateScreen: React.FC = () => {
                 }}
               >
                 <View className="flex-row justify-between items-start">
-                  <View className="flex-1">
-                    <Text className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      {draft.content.substring(0, 50)}...
+                  <View className="flex-1 mr-4">
+                    <Text className={`font-medium text-base mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {draft.content.substring(0, 60)}...
                     </Text>
-                    <Text className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                      #{draft.sport} • {new Date(draft.createdAt).toLocaleDateString()}
-                    </Text>
+                    <View className="flex-row items-center">
+                      <Text className={`text-sm ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
+                        #{draft.sport}
+                      </Text>
+                      <Text className={`text-sm ml-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                        • {new Date(draft.createdAt).toLocaleDateString()}
+                      </Text>
+                    </View>
                   </View>
-                  <TouchableOpacity onPress={() => deleteDraft(draft.id)}>
-                    <Ionicons name="trash-outline" size={20} color="#ef4444" />
+                  <TouchableOpacity 
+                    onPress={() => deleteDraft(draft.id)}
+                    className="p-2 rounded-full"
+                    style={{ backgroundColor: '#ef444420' }}
+                  >
+                    <Trash2 size={18} color="#ef4444" />
                   </TouchableOpacity>
                 </View>
               </TouchableOpacity>
@@ -316,11 +369,23 @@ export const CreateScreen: React.FC = () => {
         </View>
 
         {/* Creation Tips */}
-        <View className="mx-4 mb-6">
-          <Text className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            Pro Tips
-          </Text>
-          <View className="space-y-3">
+        <View className="mx-4 mb-8">
+          <View className="flex-row items-center mb-6">
+            <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${
+              isDark ? 'bg-blue-900' : 'bg-blue-100'
+            }`}>
+              <Zap size={20} color="#3b82f6" />
+            </View>
+            <View className="flex-1">
+              <Text className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Pro Tips
+              </Text>
+              <Text className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                Level up your content creation
+              </Text>
+            </View>
+          </View>
+          <View className="space-y-4">
             {[
               { emoji: '📸', tip: 'Use good lighting for better photos' },
               { emoji: '✍️', tip: 'Keep your captions engaging and authentic' },
@@ -329,7 +394,7 @@ export const CreateScreen: React.FC = () => {
             ].map((item, index) => (
               <View
                 key={index}
-                className={`p-4 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+                className={`p-5 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'}`}
                 style={{
                   shadowColor: '#000',
                   shadowOffset: { width: 0, height: 2 },
@@ -338,9 +403,9 @@ export const CreateScreen: React.FC = () => {
                   elevation: 2,
                 }}
               >
-                <View className="flex-row items-start">
-                  <Text className="text-xl mr-3">{item.emoji}</Text>
-                  <Text className={`flex-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <View className="flex-row items-center">
+                  <Text className="text-2xl mr-4">{item.emoji}</Text>
+                  <Text className={`flex-1 text-base ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                     {item.tip}
                   </Text>
                 </View>

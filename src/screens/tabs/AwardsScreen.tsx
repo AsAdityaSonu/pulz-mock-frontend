@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, TouchableOpacity, ScrollView, Alert, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { 
+  Trophy, 
+  Target, 
+  Flame, 
+  Star, 
+  Medal, 
+  Diamond,
+  Heart,
+  Users,
+  CheckCircle,
+  Grid3X3,
+  Zap,
+  TrophyIcon
+} from 'lucide-react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { Header } from '../../components/Header';
 import apiService from '../../services/api';
@@ -101,27 +114,7 @@ const AwardsScreenComponent: React.FC = () => {
     }
   };
 
-  const getIconName = (iconType: string): keyof typeof Ionicons.glyphMap => {
-    const iconMap: { [key: string]: keyof typeof Ionicons.glyphMap } = {
-      trophy: 'trophy',
-      bullseye: 'radio-button-on',
-      fire: 'flame',
-      star: 'star',
-      medal: 'medal',
-      crown: 'diamond'
-    };
-    return iconMap[iconType] || 'trophy';
-  };
 
-  const getCategoryIcon = (category: string): keyof typeof Ionicons.glyphMap => {
-    const categoryMap: { [key: string]: keyof typeof Ionicons.glyphMap } = {
-      streak: 'flame',
-      engagement: 'heart',
-      social: 'people',
-      consistency: 'checkmark-circle'
-    };
-    return categoryMap[category] || 'trophy';
-  };
 
   const getCategoryColor = (category: string) => {
     const colorMap: { [key: string]: string } = {
@@ -138,11 +131,11 @@ const AwardsScreenComponent: React.FC = () => {
     : achievements.filter(achievement => achievement.type === selectedCategory);
 
   const categories = [
-    { key: 'all', label: 'All', icon: 'apps' as keyof typeof Ionicons.glyphMap },
-    { key: 'streak', label: 'Streaks', icon: 'flame' as keyof typeof Ionicons.glyphMap },
-    { key: 'engagement', label: 'Engagement', icon: 'heart' as keyof typeof Ionicons.glyphMap },
-    { key: 'social', label: 'Social', icon: 'people' as keyof typeof Ionicons.glyphMap },
-    { key: 'consistency', label: 'Consistency', icon: 'checkmark-circle' as keyof typeof Ionicons.glyphMap },
+    { key: 'all', label: 'All' },
+    { key: 'streak', label: 'Streaks' },
+    { key: 'engagement', label: 'Engagement' },
+    { key: 'social', label: 'Social' },
+    { key: 'consistency', label: 'Consistency' },
   ];
 
   const renderAchievement = (achievement: Achievement) => {
@@ -152,7 +145,7 @@ const AwardsScreenComponent: React.FC = () => {
     return (
       <TouchableOpacity
         key={achievement.id}
-        className={`mx-4 mb-4 rounded-2xl overflow-hidden ${
+        className={`mx-4 mb-6 rounded-2xl overflow-hidden ${
           achievement.completed 
             ? canClaim
               ? 'bg-gradient-to-r from-yellow-400 to-orange-500'
@@ -182,7 +175,7 @@ const AwardsScreenComponent: React.FC = () => {
         onPress={canClaim ? () => handleClaimAchievement(achievement.id) : undefined}
         disabled={claimingId === achievement.id}
       >
-        <View className="p-4">
+        <View className="p-6">
           <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center flex-1">
               <View className={`w-14 h-14 rounded-full items-center justify-center mr-4 ${
@@ -194,19 +187,32 @@ const AwardsScreenComponent: React.FC = () => {
                     ? 'bg-gray-700' 
                     : 'bg-gray-100'
               }`}>
-                <Ionicons 
-                  name={getIconName(achievement.icon)} 
-                  size={24} 
-                  color={
-                    achievement.completed 
-                      ? canClaim 
-                        ? '#ffffff'
-                        : '#10b981'
-                      : isDark 
-                        ? '#9ca3af' 
-                        : '#6b7280'
-                  } 
-                />
+                {(() => {
+                  const iconColor = achievement.completed 
+                    ? canClaim 
+                      ? '#ffffff'
+                      : '#10b981'
+                    : isDark 
+                      ? '#9ca3af' 
+                      : '#6b7280';
+                  
+                  switch(achievement.icon) {
+                    case 'trophy':
+                      return <Trophy size={24} color={iconColor} />;
+                    case 'bullseye':
+                      return <Target size={24} color={iconColor} />;
+                    case 'fire':
+                      return <Flame size={24} color={iconColor} />;
+                    case 'star':
+                      return <Star size={24} color={iconColor} />;
+                    case 'medal':
+                      return <Medal size={24} color={iconColor} />;
+                    case 'crown':
+                      return <Diamond size={24} color={iconColor} />;
+                    default:
+                      return <Trophy size={24} color={iconColor} />;
+                  }
+                })()}
               </View>
               <View className="flex-1">
                 <Text className={`font-bold text-lg ${
@@ -248,7 +254,7 @@ const AwardsScreenComponent: React.FC = () => {
                   </View>
                 ) : (
                   <View className="items-center">
-                    <Ionicons name="checkmark-circle" size={24} color="#10b981" />
+                    <CheckCircle size={24} color="#10b981" />
                     <Text className={`text-xs mt-1 ${isDark ? 'text-green-400' : 'text-green-600'}`}>
                       Claimed
                     </Text>
@@ -332,11 +338,11 @@ const AwardsScreenComponent: React.FC = () => {
       <ScrollView 
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 32 }}
       >
         {/* Stats Overview */}
         {stats && (
-          <View className="mx-4 mt-6 mb-6">
+          <View className="mx-4 mt-6 mb-8">
             <View
               className={`rounded-2xl p-6 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
               style={{
@@ -347,109 +353,152 @@ const AwardsScreenComponent: React.FC = () => {
                 elevation: 5,
               }}
             >
-              <View className="items-center mb-4">
-                <View className={`w-20 h-20 rounded-full items-center justify-center mb-3 ${
-                  isDark ? 'bg-purple-900' : 'bg-purple-100'
-                }`}>
-                  <Ionicons name="trophy" size={32} color="#8b5cf6" />
+              {/* Header Section - Left Aligned */}
+              <View className="mb-6">
+                <View className="flex-row items-center mb-4">
+                  <View className={`w-16 h-16 rounded-full items-center justify-center mr-4 ${
+                    isDark ? 'bg-purple-900' : 'bg-purple-100'
+                  }`}>
+                    <Trophy size={28} color="#8b5cf6" />
+                  </View>
+                  <View className="flex-1">
+                    <Text className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {stats.completedAchievements}/{stats.totalAchievements}
+                    </Text>
+                    <Text className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Achievements Unlocked
+                    </Text>
+                    <Text className={`text-sm mt-1 ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
+                      {stats.completionPercentage}% Complete
+                    </Text>
+                  </View>
                 </View>
-                <Text className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  {stats.completedAchievements}/{stats.totalAchievements}
-                </Text>
-                <Text className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Achievements Unlocked
-                </Text>
-                <Text className={`text-sm mt-1 ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
-                  {stats.completionPercentage}% Complete
-                </Text>
               </View>
               
+              {/* Stats Grid */}
               <View className="flex-row justify-between">
                 <View className="items-center">
-                  <Ionicons name="flash" size={20} color="#f59e0b" />
-                  <Text className={`text-xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <Zap size={20} color="#f59e0b" />
+                  <Text className={`text-xl font-bold mt-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {stats.totalPoints}
                   </Text>
-                  <Text className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <Text className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                     Total Points
                   </Text>
                 </View>
                 
-                {Object.entries(stats.categoryStats).map(([category, categoryData]) => (
-                  <View key={category} className="items-center">
-                    <Ionicons 
-                      name={getCategoryIcon(category)} 
-                      size={20} 
-                      color={getCategoryColor(category)} 
-                    />
-                    <Text className={`text-xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      {categoryData.completed}/{categoryData.total}
-                    </Text>
-                    <Text className={`text-xs capitalize ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                      {category}
-                    </Text>
-                  </View>
-                ))}
+                {Object.entries(stats.categoryStats).map(([category, categoryData]) => {
+                  const iconColor = getCategoryColor(category);
+                  let IconComponent;
+                  
+                  switch(category) {
+                    case 'streak':
+                      IconComponent = <Flame size={20} color={iconColor} />;
+                      break;
+                    case 'engagement':
+                      IconComponent = <Heart size={20} color={iconColor} />;
+                      break;
+                    case 'social':
+                      IconComponent = <Users size={20} color={iconColor} />;
+                      break;
+                    case 'consistency':
+                      IconComponent = <CheckCircle size={20} color={iconColor} />;
+                      break;
+                    default:
+                      IconComponent = <Trophy size={20} color={iconColor} />;
+                  }
+                  
+                  return (
+                    <View key={category} className="items-center">
+                      {IconComponent}
+                      <Text className={`text-xl font-bold mt-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        {categoryData.completed}/{categoryData.total}
+                      </Text>
+                      <Text className={`text-xs mt-1 capitalize ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                        {category}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             </View>
           </View>
         )}
 
         {/* Category Filter */}
-        <View className="mb-6">
+        <View className="mb-8">
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 16 }}
           >
-            <View className="flex-row space-x-3">
-              {categories.map((category) => (
-                <TouchableOpacity
-                  key={category.key}
-                  onPress={() => setSelectedCategory(category.key)}
-                  className={`px-4 py-2 rounded-full flex-row items-center ${
-                    selectedCategory === category.key
-                      ? 'bg-purple-500'
-                      : isDark
-                        ? 'bg-gray-800'
-                        : 'bg-white'
-                  }`}
-                  style={{
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.1,
-                    shadowRadius: 4,
-                    elevation: 2,
-                  }}
-                >
-                  <Ionicons 
-                    name={category.icon} 
-                    size={16} 
-                    color={
+            <View className="flex-row space-x-4">
+              {categories.map((category) => {
+                const iconColor = selectedCategory === category.key
+                  ? '#ffffff'
+                  : isDark
+                    ? '#9ca3af'
+                    : '#6b7280';
+                
+                let IconComponent;
+                switch(category.key) {
+                  case 'all':
+                    IconComponent = <Grid3X3 size={16} color={iconColor} />;
+                    break;
+                  case 'streak':
+                    IconComponent = <Flame size={16} color={iconColor} />;
+                    break;
+                  case 'engagement':
+                    IconComponent = <Heart size={16} color={iconColor} />;
+                    break;
+                  case 'social':
+                    IconComponent = <Users size={16} color={iconColor} />;
+                    break;
+                  case 'consistency':
+                    IconComponent = <CheckCircle size={16} color={iconColor} />;
+                    break;
+                  default:
+                    IconComponent = <Grid3X3 size={16} color={iconColor} />;
+                }
+                
+                return (
+                  <TouchableOpacity
+                    key={category.key}
+                    onPress={() => setSelectedCategory(category.key)}
+                    className={`px-5 py-3 rounded-full flex-row items-center ${
                       selectedCategory === category.key
-                        ? '#ffffff'
+                        ? 'bg-purple-500'
                         : isDark
-                          ? '#9ca3af'
-                          : '#6b7280'
-                    } 
-                  />
-                  <Text className={`ml-2 font-medium ${
-                    selectedCategory === category.key
-                      ? 'text-white'
-                      : isDark
-                        ? 'text-gray-300'
-                        : 'text-gray-700'
-                  }`}>
-                    {category.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                          ? 'bg-gray-800'
+                          : 'bg-white'
+                    }`}
+                    style={{
+                      shadowColor: '#000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.1,
+                      shadowRadius: 4,
+                      elevation: 2,
+                    }}
+                  >
+                    {IconComponent}
+                    <Text className={`ml-2 font-medium ${
+                      selectedCategory === category.key
+                        ? 'text-white'
+                        : isDark
+                          ? 'text-gray-300'
+                          : 'text-gray-700'
+                    }`}>
+                      {category.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           </ScrollView>
         </View>
 
         {/* Achievements List */}
-        <View className="mb-4">
+        <View className="mb-8">
           {filteredAchievements.length > 0 ? (
             // Sort achievements: unclaimed completed first, then by completion status, then by progress
             filteredAchievements
@@ -463,8 +512,7 @@ const AwardsScreenComponent: React.FC = () => {
               .map(renderAchievement)
           ) : (
             <View className="mx-4 p-8 items-center">
-              <Ionicons 
-                name="trophy-outline" 
+              <Trophy 
                 size={48} 
                 color={isDark ? '#4b5563' : '#d1d5db'} 
               />
@@ -478,8 +526,8 @@ const AwardsScreenComponent: React.FC = () => {
         </View>
 
         {/* Motivational Message */}
-        <View className={`mx-4 mb-6 p-6 rounded-2xl ${
-          isDark ? 'bg-gray-800' : 'bg-blue-50'
+        <View className={`mx-4 mb-8 p-8 rounded-2xl ${
+          isDark ? 'bg-gray-800' : 'bg-purple-50'
         }`}
         style={{
           shadowColor: '#000',
@@ -488,12 +536,31 @@ const AwardsScreenComponent: React.FC = () => {
           shadowRadius: 4,
           elevation: 2,
         }}>
-          <Text className={`text-center text-lg font-medium italic ${
+          <View className="flex-row items-center mb-4">
+            <View className={`w-12 h-12 rounded-full items-center justify-center mr-4 ${
+              isDark ? 'bg-purple-900' : 'bg-purple-100'
+            }`}>
+              <Star size={20} color="#8b5cf6" />
+            </View>
+            <View className="flex-1">
+              <Text className={`text-lg font-semibold ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>
+                Keep Going!
+              </Text>
+              <Text className={`text-sm ${
+                isDark ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                Every achievement starts with a single step
+              </Text>
+            </View>
+          </View>
+          <Text className={`text-base font-medium italic ${
             isDark ? 'text-gray-300' : 'text-gray-700'
           }`}>
             "Achievement is not the destination, but the journey of growth."
           </Text>
-          <Text className={`text-center mt-2 font-semibold ${
+          <Text className={`mt-3 font-semibold ${
             isDark ? 'text-purple-400' : 'text-purple-600'
           }`}>
             Keep pushing your limits! 🚀
